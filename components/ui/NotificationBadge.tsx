@@ -1,15 +1,16 @@
 type NotificationBadgeProps = {
-  count: number;
+  show?: boolean;
 };
 
-export function NotificationBadge({ count }: NotificationBadgeProps) {
-  if (count <= 0) {
+export function NotificationBadge({ show = false }: NotificationBadgeProps) {
+  if (!show) {
     return null;
   }
 
   return (
-    <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-red-400 px-1.5 py-0.5 text-xs font-semibold leading-none text-slate-950">
-      {count}
-    </span>
+    <span
+      aria-hidden="true"
+      className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-(--accent-danger) shadow-[0_0_12px_rgba(248,113,113,0.8)]"
+    />
   );
 }

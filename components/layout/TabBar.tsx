@@ -1,41 +1,58 @@
-import {
-  AlarmClock,
-  CalendarDays,
-  Clock3,
-  Coffee,
-  Hourglass,
-  TimerReset,
-} from "lucide-react";
+"use client";
 
-const tabs = [
-  { label: "Clock", icon: Clock3 },
-  { label: "Timer", icon: Hourglass },
-  { label: "Stopwatch", icon: TimerReset },
-  { label: "Pomodoro", icon: Coffee },
-  { label: "Alarm", icon: AlarmClock },
-  { label: "Calendar", icon: CalendarDays },
-];
+import { motion } from "framer-motion";
+import { NotificationBadge } from "@/components/ui/NotificationBadge";
+import { TABS } from "@/lib/tabs";
+import type { TabId } from "@/types";
 
-export function TabBar() {
+type TabBarProps = {
+  activeTab: TabId;
+  onTabChange: (tab: TabId) => void;
+  hasEnabledAlarm?: boolean;
+};
+
+export function TabBar({
+  activeTab,
+  onTabChange,
+  hasEnabledAlarm = false,
+}: TabBarProps) {
   return (
     <nav
-      className="glass-panel flex flex-wrap items-center gap-2 p-2"
       aria-label="Timeglass modules"
+      className="glass-panel mx-auto flex w-full max-w-5xl gap-2 overflow-x-auto p-2"
     >
-      {tabs.map(({ label, icon: Icon }, index) => (
-        <button
-          key={label}
-          type="button"
-          className={`flex h-11 items-center gap-2 rounded-lg px-4 text-sm font-medium transition ${
-            index === 0
-              ? "bg-white/12 text-slate-50"
-              : "text-slate-400 hover:bg-white/8 hover:text-slate-100"
-          }`}
-        >
-          <Icon className="size-4" aria-hidden="true" />
-          {label}
-        </button>
-      ))}
+      {TABS.map((tab) => {
+        const Icon = tab.icon;
+        const isActive = activeTab === tab.id;
+        const showBadge = tab.id === "alarm" && hasEnabledAlarm;
+
+        return (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => onTabChange(tab.id)}
+            aria-current={isActive ? "page" : undefined}
+            className={`relative flex min-h-11 min-w-24 items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition ${
+              isActive
+                ? "bg-white/10 text-foreground"
+                : "text-(--text-muted) hover:bg-white/8 hover:text-foreground"
+            }`}
+          >
+            <Icon className="size-4" aria-hidden="true" />
+            <span>{tab.label}</span>
+
+            {isActive && (
+              <motion.span
+                layoutId="active-tab-indicator"
+                className="absolute inset-x-3 bottom-1 h-0.5 rounded-full bg-(--accent-primary) shadow-[0_0_12px_rgba(124,107,255,0.9)]"
+                transition={{ duration: 0.25, ease: "easeOut" }}
+              />
+            )}
+
+            <NotificationBadge show={showBadge} />
+          </button>
+        );
+      })}
     </nav>
   );
 }

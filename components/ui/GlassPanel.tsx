@@ -1,7 +1,30 @@
-import type { ComponentPropsWithoutRef } from "react";
+"use client";
 
-type GlassPanelProps = ComponentPropsWithoutRef<"section">;
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
-export function GlassPanel({ className = "", ...props }: GlassPanelProps) {
-  return <section className={`glass-panel ${className}`} {...props} />;
+type GlassPanelProps = {
+  children: ReactNode;
+  className?: string;
+  hover?: boolean;
+  glow?: boolean;
+};
+
+export function GlassPanel({
+  children,
+  className = "",
+  hover = false,
+  glow = false,
+}: GlassPanelProps) {
+  return (
+    <motion.div
+      className={`glass-panel ${className}`}
+      initial={glow ? { opacity: 0, scale: 0.98 } : false}
+      animate={glow ? { opacity: 1, scale: 1 } : undefined}
+      whileHover={hover ? { y: -2 } : undefined}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  );
 }

@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 2 Core Infrastructure Complete  
+**Current Stage:** Phase 3 Layout & Navigation Complete  
 **Last Updated:** 2026-06-25  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -46,6 +46,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Phase 1 scaffold implemented  | Next.js 16 scaffold was checked, dependencies were installed, global styles and fonts were configured, and main folders/placeholders were added.              | Completed |
 | 2026-06-25 | Scaffold verification run     | `npx tsc --noEmit` and `npm run lint` passed. Dev server was left for local user verification. Build was blocked here by sandboxed Google Fonts network access. | Completed |
 | 2026-06-25 | Phase 2 core infrastructure implemented | Shared types, storage keys, LocalStorage, notifications, audio, clock, timer, stopwatch, alarms, Pomodoro, and timezone infrastructure were implemented. | Completed |
+| 2026-06-25 | Phase 3 layout and navigation implemented | AppShell now has six-tab navigation, animated panel transitions, responsive tab bar behavior, active tab persistence, shared tab metadata, glass panels, notification badge support, and animated background. | Completed |
 
 ---
 
@@ -63,7 +64,7 @@ The goal is to keep a clear record of:
 
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
-| High     | Start Phase 3 layout and navigation | Build functional tab switching, responsive app shell behavior, and initial transitions on top of the Phase 2 hooks. | Not Started |
+| High     | Start Phase 4 world clock tab | Build the real World Clock interface with analog clock, digital clock, timezone cards, timezone search, local timezone detection, and 12h / 24h format support. | Not Started |
 | High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine.                                  | Not Started |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
@@ -82,7 +83,7 @@ The goal is to keep a clear record of:
 | Design System          | Yes     | Yes         | No        | Base CSS variables and glass utility added; separate documentation still needed |
 | Technical Architecture | Yes     | No          | No        | Needs separate documentation                         |
 | App Scaffold           | Yes     | No          | Yes       | Next.js 16, TypeScript, Tailwind v4, ESLint, dependencies, folders, fonts, and base shell prepared |
-| Layout & Navigation    | Yes     | Yes         | No        | Placeholder AppShell, TabBar, GlowBackground, and GlassPanel created |
+| Layout & Navigation    | Yes     | No          | Yes       | Six-tab AppShell, TabBar, GlowBackground, GlassPanel, NotificationBadge, tab transitions, and active-tab persistence implemented |
 | World Clock            | Yes     | No          | No        | Placeholder files created; real clock logic not implemented yet |
 | Countdown Timer        | Yes     | No          | No        | Placeholder files created; timer logic not implemented yet |
 | Stopwatch              | Yes     | No          | No        | Placeholder files created; stopwatch logic not implemented yet |
@@ -128,6 +129,11 @@ The goal is to keep a clear record of:
 - Added `useClock` with `requestAnimationFrame` updates and optional timezone support
 - Added initial `useTimer`, `useStopwatch`, `useAlarms`, and `usePomodoro` infrastructure hooks
 - Added default timezone data and timezone search options in `lib/timezones.ts`
+- Added shared `TABS` metadata and tab ID validation in `lib/tabs.ts`
+- Added a functional six-tab `TabBar` with active styling, animated underline, mobile horizontal scrolling, and alarm badge support
+- Added animated `GlassPanel` support for entrance and hover states
+- Added an animated ambient `GlowBackground` that respects reduced motion settings
+- Added a Phase 3 `AppShell` with persisted active tab state and Framer Motion panel transitions
 
 #### Changed
 
@@ -136,6 +142,8 @@ The goal is to keep a clear record of:
 - Replaced the generated Create Next App landing page with the Timeglass scaffold shell.
 - Updated root metadata to use the Timeglass name and description.
 - Replaced Phase 1 hook and utility stubs with browser-safe Phase 2 infrastructure implementations.
+- Replaced the placeholder Phase 1 layout cards with a real single-page app shell for the six planned modules.
+- Updated the global glass panel radius to 8px for a tighter application UI.
 
 #### Verified
 
@@ -143,16 +151,18 @@ The goal is to keep a clear record of:
 - `npm run lint` passed.
 - Phase 2 verification passed with `npx tsc --noEmit`.
 - Phase 2 verification passed with `npm run lint`.
+- Phase 3 verification passed with `npx tsc --noEmit`.
+- Phase 3 verification passed with `npm run lint`.
 
 #### Not Verified Here
 
-- `npm run dev` was not run to completion because the user will run it locally.
+- `npm run dev` could not bind to `0.0.0.0:3000` in the managed sandbox (`listen EPERM`). Browser runtime verification is intentionally left for local user verification.
 - `npm run build` was attempted but could not complete in this sandbox because `next/font/google` could not fetch Google Fonts.
 
 #### Not Started Yet
 
 - Full feature implementation
-- Hook behavior implementation
+- Full feature UI implementation
 - Testing setup
 - Deployment setup
 
@@ -184,19 +194,21 @@ These questions should be answered before or during development:
 
 ## Current Project Phase
 
-The project has completed **Phase 2 — Core Infrastructure**.
+The project has completed **Phase 3 — Layout & Navigation**.
 
-The Next.js app scaffold now exists with base styling, font setup, metadata, dependencies, folder structure, placeholder files, and shared browser-safe infrastructure.
+The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, and LocalStorage persistence for the active tab.
 
-Phase 2 added:
+Phase 3 added:
 
-1. Shared TypeScript types
-2. LocalStorage hook
-3. Notification hook
-4. Audio helpers
-5. Storage key conventions
+1. Shared tab metadata in `lib/tabs.ts`
+2. Controlled six-tab `TabBar`
+3. Animated `AppShell` panel switching
+4. Reduced-motion-aware `GlowBackground`
+5. Reusable animated `GlassPanel`
+6. Notification badge support for future alarm state
+7. Active tab persistence through `useLocalStorage`
 
-The next recommended implementation step is **Phase 3 — Layout & Navigation**.
+The next recommended implementation step is **Phase 4 — World Clock Tab**.
 
 ---
 
@@ -237,6 +249,6 @@ Use this format for new change log entries:
 
 ## Short Status
 
-**Done:** Phase 1 project scaffold and Phase 2 core infrastructure  
+**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, and Phase 3 layout/navigation  
 **In Progress:** Planning documentation  
-**Next:** Run `npm run dev` locally, then begin Phase 3 layout and navigation
+**Next:** Run `npm run dev` locally, then begin Phase 4 world clock implementation
