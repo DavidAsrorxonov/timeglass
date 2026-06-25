@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 3 Layout & Navigation Complete  
+**Current Stage:** Phase 4 World Clock Complete  
 **Last Updated:** 2026-06-25  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -47,6 +47,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Scaffold verification run     | `npx tsc --noEmit` and `npm run lint` passed. Dev server was left for local user verification. Build was blocked here by sandboxed Google Fonts network access. | Completed |
 | 2026-06-25 | Phase 2 core infrastructure implemented | Shared types, storage keys, LocalStorage, notifications, audio, clock, timer, stopwatch, alarms, Pomodoro, and timezone infrastructure were implemented. | Completed |
 | 2026-06-25 | Phase 3 layout and navigation implemented | AppShell now has six-tab navigation, animated panel transitions, responsive tab bar behavior, active tab persistence, shared tab metadata, glass panels, notification badge support, and animated background. | Completed |
+| 2026-06-25 | Phase 4 world clock implemented | The World Clock tab now has a live analog clock, digital clock, 12h / 24h preference, saved timezone cards, timezone search, pin/remove actions, empty state, and LocalStorage persistence. | Completed |
 
 ---
 
@@ -64,7 +65,7 @@ The goal is to keep a clear record of:
 
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
-| High     | Start Phase 4 world clock tab | Build the real World Clock interface with analog clock, digital clock, timezone cards, timezone search, local timezone detection, and 12h / 24h format support. | Not Started |
+| High     | Start Phase 5 countdown timer tab | Build countdown input, presets, progress ring, timer controls, completion sound, and completion notification. | Not Started |
 | High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine.                                  | Not Started |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
@@ -84,7 +85,7 @@ The goal is to keep a clear record of:
 | Technical Architecture | Yes     | No          | No        | Needs separate documentation                         |
 | App Scaffold           | Yes     | No          | Yes       | Next.js 16, TypeScript, Tailwind v4, ESLint, dependencies, folders, fonts, and base shell prepared |
 | Layout & Navigation    | Yes     | No          | Yes       | Six-tab AppShell, TabBar, GlowBackground, GlassPanel, NotificationBadge, tab transitions, and active-tab persistence implemented |
-| World Clock            | Yes     | No          | No        | Placeholder files created; real clock logic not implemented yet |
+| World Clock            | Yes     | No          | Yes       | Live analog/digital clock, timezone cards, search, pin/remove actions, 12h / 24h format, and LocalStorage persistence implemented |
 | Countdown Timer        | Yes     | No          | No        | Placeholder files created; timer logic not implemented yet |
 | Stopwatch              | Yes     | No          | No        | Placeholder files created; stopwatch logic not implemented yet |
 | Pomodoro               | Yes     | No          | No        | Placeholder files created; Pomodoro logic not implemented yet |
@@ -134,6 +135,14 @@ The goal is to keep a clear record of:
 - Added animated `GlassPanel` support for entrance and hover states
 - Added an animated ambient `GlowBackground` that respects reduced motion settings
 - Added a Phase 3 `AppShell` with persisted active tab state and Framer Motion panel transitions
+- Added a full Phase 4 `ClockTab` with live analog and digital clocks
+- Added animated SVG clock hands with smooth second-hand movement in `AnalogClock`
+- Added `DigitalClock` with local timezone display, date display, seconds, and 12h / 24h switching
+- Added saved timezone cards with live time, compact analog clocks, pin actions, and remove actions
+- Added timezone search modal with city, region, and IANA timezone filtering
+- Added World Clock empty state and 8-timezone maximum handling
+- Added local timezone detection helper in `lib/timezones.ts`
+- Added timezone normalization for older saved LocalStorage entries
 
 #### Changed
 
@@ -144,6 +153,11 @@ The goal is to keep a clear record of:
 - Replaced Phase 1 hook and utility stubs with browser-safe Phase 2 infrastructure implementations.
 - Replaced the placeholder Phase 1 layout cards with a real single-page app shell for the six planned modules.
 - Updated the global glass panel radius to 8px for a tighter application UI.
+- Updated `Timezone` to include the IANA `timezone` field.
+- Updated timezone seed data to use stable display IDs plus IANA timezone strings.
+- Replaced the World Clock placeholder in `AppShell` with the real `ClockTab`.
+- Fixed analog clock hand rotation by using SVG-centered transforms and added a visible flowing second hand.
+- Fixed digital clock animation so seconds animate independently, while minute and hour segments animate only when their values change.
 
 #### Verified
 
@@ -153,15 +167,17 @@ The goal is to keep a clear record of:
 - Phase 2 verification passed with `npm run lint`.
 - Phase 3 verification passed with `npx tsc --noEmit`.
 - Phase 3 verification passed with `npm run lint`.
+- Phase 4 verification passed with `npx tsc --noEmit`.
+- Phase 4 verification passed with `npm run lint`.
 
 #### Not Verified Here
 
-- `npm run dev` could not bind to `0.0.0.0:3000` in the managed sandbox (`listen EPERM`). Browser runtime verification is intentionally left for local user verification.
+- `npm run dev` could not bind to `127.0.0.1:3000` in the managed sandbox (`listen EPERM`). Browser runtime verification is intentionally left for local user verification.
 - `npm run build` was attempted but could not complete in this sandbox because `next/font/google` could not fetch Google Fonts.
 
 #### Not Started Yet
 
-- Full feature implementation
+- Remaining feature implementations
 - Full feature UI implementation
 - Testing setup
 - Deployment setup
@@ -194,21 +210,22 @@ These questions should be answered before or during development:
 
 ## Current Project Phase
 
-The project has completed **Phase 3 — Layout & Navigation**.
+The project has completed **Phase 4 — World Clock Tab**.
 
-The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, and LocalStorage persistence for the active tab.
+The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, and a complete World Clock tab.
 
-Phase 3 added:
+Phase 4 added:
 
-1. Shared tab metadata in `lib/tabs.ts`
-2. Controlled six-tab `TabBar`
-3. Animated `AppShell` panel switching
-4. Reduced-motion-aware `GlowBackground`
-5. Reusable animated `GlassPanel`
-6. Notification badge support for future alarm state
-7. Active tab persistence through `useLocalStorage`
+1. Live local analog clock
+2. Live local digital clock with date and local timezone label
+3. Persisted 12h / 24h clock format preference
+4. Persisted saved timezone cards
+5. Timezone search and add flow
+6. Pin, unpin, and remove timezone actions
+7. Empty state and maximum timezone limit behavior
+8. Animated timezone cards and search modal
 
-The next recommended implementation step is **Phase 4 — World Clock Tab**.
+The next recommended implementation step is **Phase 5 — Countdown Timer Tab**.
 
 ---
 
@@ -249,6 +266,6 @@ Use this format for new change log entries:
 
 ## Short Status
 
-**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, and Phase 3 layout/navigation  
+**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, Phase 3 layout/navigation, and Phase 4 world clock  
 **In Progress:** Planning documentation  
-**Next:** Run `npm run dev` locally, then begin Phase 4 world clock implementation
+**Next:** Run `npm run dev` locally, then begin Phase 5 countdown timer implementation

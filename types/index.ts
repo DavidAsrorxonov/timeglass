@@ -14,6 +14,7 @@ export interface Timezone {
   id: string;
   city: string;
   region: string;
+  timezone: string;
   offset: string;
   pinned: boolean;
 }

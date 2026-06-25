@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect } from "react";
+import { ClockTab } from "@/components/clock/ClockTab";
 import { GlowBackground } from "@/components/layout/GlowBackground";
 import { TabBar } from "@/components/layout/TabBar";
 import { GlassPanel } from "@/components/ui/GlassPanel";
@@ -76,6 +77,14 @@ function PlaceholderPanel({ activeTab }: { activeTab: TabId }) {
   );
 }
 
+function ActivePanel({ activeTab }: { activeTab: TabId }) {
+  if (activeTab === "clock") {
+    return <ClockTab />;
+  }
+
+  return <PlaceholderPanel activeTab={activeTab} />;
+}
+
 export function AppShell() {
   const reduceMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useLocalStorage<TabId>(
@@ -125,7 +134,7 @@ export function AppShell() {
               exit={reduceMotion ? undefined : "exit"}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <PlaceholderPanel activeTab={safeActiveTab} />
+              <ActivePanel activeTab={safeActiveTab} />
             </motion.div>
           </AnimatePresence>
         </section>

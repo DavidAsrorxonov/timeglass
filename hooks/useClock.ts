@@ -25,29 +25,40 @@ function getTimeParts(timezone?: string): ClockState {
     };
   }
 
-  const formatter = new Intl.DateTimeFormat("en-US", {
-    timeZone: timezone,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    weekday: "long",
-    hour12: false,
-    hourCycle: "h23",
-  });
+  try {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: timezone,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      weekday: "long",
+      hour12: false,
+      hourCycle: "h23",
+    });
 
-  const parts = formatter.formatToParts(now);
-  const getPart = (type: Intl.DateTimeFormatPartTypes) => {
-    return parts.find((part) => part.type === type)?.value ?? "0";
-  };
+    const parts = formatter.formatToParts(now);
+    const getPart = (type: Intl.DateTimeFormatPartTypes) => {
+      return parts.find((part) => part.type === type)?.value ?? "0";
+    };
 
-  return {
-    date: now,
-    hours: Number(getPart("hour")),
-    minutes: Number(getPart("minute")),
-    seconds: Number(getPart("second")),
-    milliseconds: now.getMilliseconds(),
-    dayOfWeek: getPart("weekday"),
-  };
+    return {
+      date: now,
+      hours: Number(getPart("hour")),
+      minutes: Number(getPart("minute")),
+      seconds: Number(getPart("second")),
+      milliseconds: now.getMilliseconds(),
+      dayOfWeek: getPart("weekday"),
+    };
+  } catch {
+    return {
+      date: now,
+      hours: now.getHours(),
+      minutes: now.getMinutes(),
+      seconds: now.getSeconds(),
+      milliseconds: now.getMilliseconds(),
+      dayOfWeek: now.toLocaleDateString("en-US", { weekday: "long" }),
+    };
+  }
 }
 
 export function useClock(timezone?: string) {
