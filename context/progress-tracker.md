@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Planning / Documentation  
+**Current Stage:** Phase 1 Scaffold Complete  
 **Last Updated:** 2026-06-25  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -43,6 +43,8 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Project structure analyzed    | The original build plan was separated conceptually into 12 phases and 5 larger development chunks.                                                            | Completed |
 | 2026-06-25 | `project-overview.md` created | A dedicated project overview document was created with overview, goals, scope, out-of-scope items, target users, and success criteria.                        | Completed |
 | 2026-06-25 | `progress-tracker.md` created | This progress tracker file was created to record completed work, current progress, next steps, and change history.                                            | Completed |
+| 2026-06-25 | Phase 1 scaffold implemented  | Next.js 16 scaffold was checked, dependencies were installed, global styles and fonts were configured, and main folders/placeholders were added.              | Completed |
+| 2026-06-25 | Scaffold verification run     | `npx tsc --noEmit` and `npm run lint` passed. Dev server was left for local user verification. Build was blocked here by sandboxed Google Fonts network access. | Completed |
 
 ---
 
@@ -50,9 +52,8 @@ The goal is to keep a clear record of:
 
 | Item                     | Description                                                                                     | Current Status |
 | ------------------------ | ----------------------------------------------------------------------------------------------- | -------------- |
-| Project documentation    | Core documentation files are being created before development starts.                           | In Progress    |
-| Planning file separation | The large original build plan is being separated into smaller, easier-to-manage Markdown files. | In Progress    |
-| Development roadmap      | The project needs a clear step-by-step roadmap that can guide the actual coding process.        | In Progress    |
+| Core infrastructure | Phase 2 should add shared types, LocalStorage, notifications, and browser-safe infrastructure. | Not Started |
+| Planning documentation | Additional supporting documents can still be created as needed. | In Progress |
 
 ---
 
@@ -62,6 +63,8 @@ The goal is to keep a clear record of:
 
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
+| High     | Start Phase 2 core infrastructure  | Add shared types, LocalStorage hook, notification hook, audio helpers, and storage-key usage.             | Not Started |
+| High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine.                                  | Not Started |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
 | High     | Create `features.md`               | Document all six main modules: World Clock, Countdown, Stopwatch, Pomodoro, Alarm, and Calendar.          | Not Started |
@@ -76,18 +79,18 @@ The goal is to keep a clear record of:
 | ---------------------- | ------- | ----------- | --------- | ---------------------------------------------------- |
 | Project Overview       | Yes     | No          | Yes       | `project-overview.md` created                        |
 | Progress Tracking      | Yes     | No          | Yes       | `progress-tracker.md` created                        |
-| Design System          | Yes     | No          | No        | Needs separate documentation                         |
+| Design System          | Yes     | Yes         | No        | Base CSS variables and glass utility added; separate documentation still needed |
 | Technical Architecture | Yes     | No          | No        | Needs separate documentation                         |
-| App Scaffold           | Yes     | No          | No        | Next.js project not created yet                      |
-| Layout & Navigation    | Yes     | No          | No        | AppShell, TabBar, GlowBackground, GlassPanel planned |
-| World Clock            | Yes     | No          | No        | Analog clock, digital clock, timezone cards planned  |
-| Countdown Timer        | Yes     | No          | No        | Timer input, presets, progress ring planned          |
-| Stopwatch              | Yes     | No          | No        | Laps, best/worst lap, copy laps planned              |
-| Pomodoro               | Yes     | No          | No        | 25/5 cycle, stats, streak planned                    |
-| Alarm System           | Yes     | No          | No        | Local browser-based alarms planned                   |
-| Local Calendar         | Yes     | No          | No        | LocalStorage calendar events planned                 |
-| Notifications          | Yes     | No          | No        | Browser Notifications API planned                    |
-| Audio Alerts           | Yes     | No          | No        | Web Audio API planned                                |
+| App Scaffold           | Yes     | No          | Yes       | Next.js 16, TypeScript, Tailwind v4, ESLint, dependencies, folders, fonts, and base shell prepared |
+| Layout & Navigation    | Yes     | Yes         | No        | Placeholder AppShell, TabBar, GlowBackground, and GlassPanel created |
+| World Clock            | Yes     | No          | No        | Placeholder files created; real clock logic not implemented yet |
+| Countdown Timer        | Yes     | No          | No        | Placeholder files created; timer logic not implemented yet |
+| Stopwatch              | Yes     | No          | No        | Placeholder files created; stopwatch logic not implemented yet |
+| Pomodoro               | Yes     | No          | No        | Placeholder files created; Pomodoro logic not implemented yet |
+| Alarm System           | Yes     | No          | No        | Placeholder files created; alarm CRUD not implemented yet |
+| Local Calendar         | Yes     | No          | No        | Placeholder files created; event management not implemented yet |
+| Notifications          | Yes     | No          | No        | Placeholder hook created; Browser Notifications API behavior not implemented yet |
+| Audio Alerts           | Yes     | No          | No        | Placeholder helper created; Web Audio API behavior not implemented yet |
 | PWA Support            | Yes     | No          | No        | Manifest and basic service worker planned            |
 | Testing                | Yes     | No          | No        | Unit and integration tests planned                   |
 
@@ -110,18 +113,34 @@ The goal is to keep a clear record of:
 - Added change log section
 - Added decision log section
 - Added notes section
+- Installed `framer-motion`, `lucide-react`, and `dayjs`
+- Added Timeglass design tokens and `.glass-panel` global utility in `app/globals.css`
+- Added `Bebas Neue`, `Inter`, and `JetBrains Mono` font setup through `next/font/google`
+- Added `components/`, `hooks/`, `lib/`, and `types/` scaffold folders
+- Added placeholder layout, UI, feature, hook, and utility files for future phases
+- Added a basic `AppShell` entry rendered from `app/page.tsx`
 
 #### Changed
 
 - The project identity changed from the original clock app concept to **Timeglass**.
 - The original large build plan is now being separated into smaller project documents.
+- Replaced the generated Create Next App landing page with the Timeglass scaffold shell.
+- Updated root metadata to use the Timeglass name and description.
+
+#### Verified
+
+- `npx tsc --noEmit` passed.
+- `npm run lint` passed.
+
+#### Not Verified Here
+
+- `npm run dev` was not run to completion because the user will run it locally.
+- `npm run build` was attempted but could not complete in this sandbox because `next/font/google` could not fetch Google Fonts.
 
 #### Not Started Yet
 
-- Actual Next.js project setup
-- Component implementation
-- Hook implementation
-- Styling implementation
+- Full feature implementation
+- Hook behavior implementation
 - Testing setup
 - Deployment setup
 
@@ -136,6 +155,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Keep first version frontend-only         | The original scope uses LocalStorage only and does not require authentication, backend, or cloud sync. |
 | 2026-06-25 | Keep alarms browser-based                | The first version uses Web Audio API and browser notifications, not operating-system-level alarms.     |
 | 2026-06-25 | Keep calendar local-only                 | The first version does not include Google Calendar, Apple Calendar, or Outlook sync.                   |
+| 2026-06-25 | Use `next/font/google` for scaffold fonts | The Phase 1 scaffold specifies Bebas Neue, Inter, and JetBrains Mono through Next font optimization.   |
 
 ---
 
@@ -143,30 +163,26 @@ The goal is to keep a clear record of:
 
 These questions should be answered before or during development:
 
-1. Should the app use the name **Timeglass** everywhere, including metadata and PWA manifest?
-2. Should the first version include only dark mode, or should light mode be added later?
-3. Should the app use default Google Fonts through `next/font/google`, or should it use system fonts first?
-4. Should the alarm sound patterns be simple at first, then improved later?
-5. Should PWA support be added during the first build or after the main app works?
-6. Should the project include tests from the beginning or after the main features are implemented?
+1. Should the first version include only dark mode, or should light mode be added later?
+2. Should alarm sound patterns be simple at first, then improved later?
+3. Should PWA support be added during the first build or after the main app works?
+4. Should tests be introduced during Phase 2 infrastructure work or after the main features are implemented?
 
 ---
 
 ## Current Project Phase
 
-The project is currently in the **documentation and planning phase**.
+The project has completed **Phase 1 — Project Scaffold**.
 
-No actual application code has been created yet.
+The Next.js app scaffold now exists with base styling, font setup, metadata, dependencies, folder structure, and placeholder files.
 
-The next recommended step is to create the following documentation files:
+The next recommended implementation step is **Phase 2 — Core Infrastructure**:
 
-1. `design-system.md`
-2. `technical-architecture.md`
-3. `features.md`
-4. `build-roadmap.md`
-5. `testing-checklist.md`
-
-After these files are ready, the Next.js project scaffold can be created.
+1. Shared TypeScript types
+2. LocalStorage hook
+3. Notification hook
+4. Audio helpers
+5. Storage key conventions
 
 ---
 
@@ -207,6 +223,6 @@ Use this format for new change log entries:
 
 ## Short Status
 
-**Done:** Project overview and progress tracker created  
+**Done:** Phase 1 project scaffold, dependencies, base styles, fonts, folder structure, and placeholder app shell  
 **In Progress:** Planning documentation  
-**Next:** Design system, technical architecture, features document, roadmap, and testing checklist
+**Next:** Run `npm run dev` locally, then begin Phase 2 core infrastructure
