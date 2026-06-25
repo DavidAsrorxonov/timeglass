@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 1 Scaffold Complete  
+**Current Stage:** Phase 2 Core Infrastructure Complete  
 **Last Updated:** 2026-06-25  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -45,6 +45,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | `progress-tracker.md` created | This progress tracker file was created to record completed work, current progress, next steps, and change history.                                            | Completed |
 | 2026-06-25 | Phase 1 scaffold implemented  | Next.js 16 scaffold was checked, dependencies were installed, global styles and fonts were configured, and main folders/placeholders were added.              | Completed |
 | 2026-06-25 | Scaffold verification run     | `npx tsc --noEmit` and `npm run lint` passed. Dev server was left for local user verification. Build was blocked here by sandboxed Google Fonts network access. | Completed |
+| 2026-06-25 | Phase 2 core infrastructure implemented | Shared types, storage keys, LocalStorage, notifications, audio, clock, timer, stopwatch, alarms, Pomodoro, and timezone infrastructure were implemented. | Completed |
 
 ---
 
@@ -52,7 +53,6 @@ The goal is to keep a clear record of:
 
 | Item                     | Description                                                                                     | Current Status |
 | ------------------------ | ----------------------------------------------------------------------------------------------- | -------------- |
-| Core infrastructure | Phase 2 should add shared types, LocalStorage, notifications, and browser-safe infrastructure. | Not Started |
 | Planning documentation | Additional supporting documents can still be created as needed. | In Progress |
 
 ---
@@ -63,7 +63,7 @@ The goal is to keep a clear record of:
 
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
-| High     | Start Phase 2 core infrastructure  | Add shared types, LocalStorage hook, notification hook, audio helpers, and storage-key usage.             | Not Started |
+| High     | Start Phase 3 layout and navigation | Build functional tab switching, responsive app shell behavior, and initial transitions on top of the Phase 2 hooks. | Not Started |
 | High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine.                                  | Not Started |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
@@ -87,10 +87,11 @@ The goal is to keep a clear record of:
 | Countdown Timer        | Yes     | No          | No        | Placeholder files created; timer logic not implemented yet |
 | Stopwatch              | Yes     | No          | No        | Placeholder files created; stopwatch logic not implemented yet |
 | Pomodoro               | Yes     | No          | No        | Placeholder files created; Pomodoro logic not implemented yet |
-| Alarm System           | Yes     | No          | No        | Placeholder files created; alarm CRUD not implemented yet |
+| Alarm System           | Yes     | No          | No        | Placeholder files created; shared alarm storage hook is ready |
 | Local Calendar         | Yes     | No          | No        | Placeholder files created; event management not implemented yet |
-| Notifications          | Yes     | No          | No        | Placeholder hook created; Browser Notifications API behavior not implemented yet |
-| Audio Alerts           | Yes     | No          | No        | Placeholder helper created; Web Audio API behavior not implemented yet |
+| Notifications          | Yes     | No          | Yes       | Browser-safe notification permission and send hook implemented |
+| Audio Alerts           | Yes     | No          | Yes       | Web Audio API oscillator-based alert manager implemented |
+| Core Infrastructure    | Yes     | No          | Yes       | Shared types, LocalStorage, notifications, audio, clock, timezone, and placeholder feature hooks implemented |
 | PWA Support            | Yes     | No          | No        | Manifest and basic service worker planned            |
 | Testing                | Yes     | No          | No        | Unit and integration tests planned                   |
 
@@ -119,6 +120,14 @@ The goal is to keep a clear record of:
 - Added `components/`, `hooks/`, `lib/`, and `types/` scaffold folders
 - Added placeholder layout, UI, feature, hook, and utility files for future phases
 - Added a basic `AppShell` entry rendered from `app/page.tsx`
+- Added complete shared app types in `types/index.ts`
+- Added centralized LocalStorage keys in `lib/storage-keys.ts`
+- Added SSR-safe `useLocalStorage` with JSON parsing, removal, and cross-tab `storage` event syncing
+- Added `useNotifications` with support detection, permission requesting, and notification sending
+- Added `AudioManager` for Web Audio API oscillator alert sounds and stop control
+- Added `useClock` with `requestAnimationFrame` updates and optional timezone support
+- Added initial `useTimer`, `useStopwatch`, `useAlarms`, and `usePomodoro` infrastructure hooks
+- Added default timezone data and timezone search options in `lib/timezones.ts`
 
 #### Changed
 
@@ -126,11 +135,14 @@ The goal is to keep a clear record of:
 - The original large build plan is now being separated into smaller project documents.
 - Replaced the generated Create Next App landing page with the Timeglass scaffold shell.
 - Updated root metadata to use the Timeglass name and description.
+- Replaced Phase 1 hook and utility stubs with browser-safe Phase 2 infrastructure implementations.
 
 #### Verified
 
 - `npx tsc --noEmit` passed.
 - `npm run lint` passed.
+- Phase 2 verification passed with `npx tsc --noEmit`.
+- Phase 2 verification passed with `npm run lint`.
 
 #### Not Verified Here
 
@@ -172,17 +184,19 @@ These questions should be answered before or during development:
 
 ## Current Project Phase
 
-The project has completed **Phase 1 — Project Scaffold**.
+The project has completed **Phase 2 — Core Infrastructure**.
 
-The Next.js app scaffold now exists with base styling, font setup, metadata, dependencies, folder structure, and placeholder files.
+The Next.js app scaffold now exists with base styling, font setup, metadata, dependencies, folder structure, placeholder files, and shared browser-safe infrastructure.
 
-The next recommended implementation step is **Phase 2 — Core Infrastructure**:
+Phase 2 added:
 
 1. Shared TypeScript types
 2. LocalStorage hook
 3. Notification hook
 4. Audio helpers
 5. Storage key conventions
+
+The next recommended implementation step is **Phase 3 — Layout & Navigation**.
 
 ---
 
@@ -223,6 +237,6 @@ Use this format for new change log entries:
 
 ## Short Status
 
-**Done:** Phase 1 project scaffold, dependencies, base styles, fonts, folder structure, and placeholder app shell  
+**Done:** Phase 1 project scaffold and Phase 2 core infrastructure  
 **In Progress:** Planning documentation  
-**Next:** Run `npm run dev` locally, then begin Phase 2 core infrastructure
+**Next:** Run `npm run dev` locally, then begin Phase 3 layout and navigation
