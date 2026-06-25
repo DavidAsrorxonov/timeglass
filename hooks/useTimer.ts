@@ -17,7 +17,12 @@ export function useTimer(options: UseTimerOptions = {}) {
   const completedRef = useRef(false);
   const endTimeRef = useRef<number | null>(null);
   const frameRef = useRef<number | null>(null);
+  const onCompleteRef = useRef(onComplete);
   const pausedRemainingRef = useRef(0);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   const clearFrame = useCallback(() => {
     if (frameRef.current !== null) {
@@ -42,14 +47,14 @@ export function useTimer(options: UseTimerOptions = {}) {
 
       if (!completedRef.current) {
         completedRef.current = true;
-        onComplete?.();
+        onCompleteRef.current?.();
       }
 
       return;
     }
 
     frameRef.current = requestAnimationFrame(tickFrame);
-  }, [clearFrame, onComplete]);
+  }, [clearFrame]);
 
   const startTimer = useCallback(
     (duration: number) => {
