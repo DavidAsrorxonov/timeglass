@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect } from "react";
 import { AlarmRingingOverlay, AlarmTab } from "@/components/alarm/AlarmTab";
+import { CalendarTab } from "@/components/calendar/CalendarTab";
 import { ClockTab } from "@/components/clock/ClockTab";
 import { CountdownTab } from "@/components/countdown/CountdownTab";
 import { GlowBackground } from "@/components/layout/GlowBackground";
@@ -107,6 +108,10 @@ function ActivePanel({
 
   if (activeTab === "alarm") {
     return <AlarmTab alarmController={alarmController} />;
+  }
+
+  if (activeTab === "calendar") {
+    return <CalendarTab />;
   }
 
   return <PlaceholderPanel activeTab={activeTab} />;

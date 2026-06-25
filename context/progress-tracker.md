@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 8 Alarm System Complete  
+**Current Stage:** Phase 9 Local Calendar Complete  
 **Last Updated:** 2026-06-25  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -52,6 +52,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Phase 6 stopwatch implemented | The Stopwatch tab now has accurate `performance.now()` timing, start/stop/resume/reset controls, lap recording, best/worst lap highlighting, animated lap history, and copy-to-clipboard export. | Completed |
 | 2026-06-25 | Phase 7 Pomodoro implemented | The Pomodoro tab now has focus and break phases, short and long breaks, cycle indicators, persisted stats, streak tracking, completion sound, and optional browser notification. | Completed |
 | 2026-06-25 | Phase 8 Alarm System implemented | The Alarm tab now has alarm CRUD, enable/disable controls, repeat days, sound selection and preview, ringing overlay, snooze/dismiss, notifications, LocalStorage persistence, and alarm tab badge support. | Completed |
+| 2026-06-25 | Phase 9 Local Calendar implemented | The Calendar tab now has a 42-cell monthly grid, month navigation, today and selected-day states, local event CRUD, event colors, event sorting, and LocalStorage persistence. | Completed |
 
 ---
 
@@ -69,7 +70,7 @@ The goal is to keep a clear record of:
 
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
-| High     | Start Phase 9 Local Calendar tab | Build local calendar month view, event list, create/edit/delete flows, and LocalStorage event persistence. | Not Started |
+| High     | Start Phase 10 cross-cutting features | Add global polish such as notification banner, keyboard shortcuts, responsive refinements, reduced motion support, and PWA basics. | Not Started |
 | High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine.                                  | Blocked Here |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
@@ -94,7 +95,7 @@ The goal is to keep a clear record of:
 | Stopwatch              | Yes     | No          | Yes       | Accurate stopwatch timing, controls, lap recording, best/worst highlighting, animated lap list, and copy export implemented |
 | Pomodoro               | Yes     | No          | Yes       | Focus/break timer, short and long breaks, cycle indicators, stats persistence, streak tracking, sound, and notifications implemented |
 | Alarm System           | Yes     | No          | Yes       | Alarm CRUD, repeat days, sound preview, ringing overlay, snooze/dismiss, notifications, LocalStorage persistence, and tab badge implemented |
-| Local Calendar         | Yes     | No          | No        | Placeholder files created; event management not implemented yet |
+| Local Calendar         | Yes     | No          | Yes       | Monthly calendar grid, local event CRUD, event colors, sorted daily event list, and LocalStorage persistence implemented |
 | Notifications          | Yes     | No          | Yes       | Browser-safe notification permission and send hook implemented |
 | Audio Alerts           | Yes     | No          | Yes       | Web Audio API oscillator-based alert manager implemented |
 | Core Infrastructure    | Yes     | No          | Yes       | Shared types, LocalStorage, notifications, audio, clock, timezone, and placeholder feature hooks implemented |
@@ -173,6 +174,11 @@ The goal is to keep a clear record of:
 - Added a global alarm ringing overlay with snooze and dismiss actions
 - Connected the Alarm tab to `AppShell`
 - Connected enabled-alarm badge state to `TabBar`
+- Added `useCalendar` for LocalStorage-backed calendar event CRUD, date-key derivation, and event sorting
+- Added `MiniCalendar` with Sunday-start 42-cell month grid, previous/next navigation, Today action, today/selected states, outside-month styling, and event indicators
+- Added `EventList` with selected-day event display, empty state, add/edit/delete flow, optional time input, preset color selection, and Framer Motion item/form animations
+- Added a full `CalendarTab` with selected date state, visible month state, local date-key handling, and responsive calendar/event layout
+- Connected the Calendar tab to `AppShell`
 
 #### Changed
 
@@ -197,6 +203,7 @@ The goal is to keep a clear record of:
 - Updated `useTimer` to keep the completion callback in a ref so effect-driven timer starts do not depend on changing callback identities.
 - Replaced the Alarm System placeholder in `AppShell` with the real `AlarmTab`.
 - Updated `AppShell` to own one shared alarm controller so alarm checking remains active across tab changes.
+- Replaced the Local Calendar placeholder in `AppShell` with the real `CalendarTab`.
 
 #### Fixed
 
@@ -222,6 +229,8 @@ The goal is to keep a clear record of:
 - Phase 7 verification passed with `npm run lint`.
 - Phase 8 verification passed with `npx tsc --noEmit`.
 - Phase 8 verification passed with `npm run lint`.
+- Phase 9 verification passed with `npx tsc --noEmit`.
+- Phase 9 verification passed with `npm run lint`.
 
 #### Not Verified Here
 
@@ -263,20 +272,20 @@ These questions should be answered before or during development:
 
 ## Current Project Phase
 
-The project has completed **Phase 7 — Pomodoro Tab**.
+The project has completed **Phase 9 — Local Calendar Tab**.
 
-The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, a complete World Clock tab, a complete Countdown Timer tab, a complete Stopwatch tab, and a complete Pomodoro tab.
+The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, a complete World Clock tab, a complete Countdown Timer tab, a complete Stopwatch tab, a complete Pomodoro tab, a complete Alarm tab, and a complete Local Calendar tab.
 
-Phase 7 added:
+Phase 9 added:
 
-1. Classic 25-minute focus sessions
-2. 5-minute short breaks and 15-minute long breaks
-3. Automatic long break after every 4 completed focus sessions
-4. Start, pause, resume, skip, and reset controls
-5. Cycle indicators and persisted productivity stats
-6. Daily streak tracking, completion sound, and optional browser notifications
+1. Sunday-start 42-cell monthly calendar grid
+2. Previous month, next month, and Today navigation
+3. Today, selected day, outside-month, and event-day visual states
+4. Local event add, edit, and delete flows
+5. Optional event times, preset event colors, and sorted daily event lists
+6. LocalStorage persistence for calendar events
 
-The next recommended implementation step is **Phase 8 — Alarm System Tab**.
+The next recommended implementation step is **Phase 10 — Cross-Cutting Features**.
 
 ---
 
@@ -317,6 +326,6 @@ Use this format for new change log entries:
 
 ## Short Status
 
-**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, Phase 3 layout/navigation, Phase 4 world clock, Phase 5 countdown timer, Phase 6 stopwatch, and Phase 7 Pomodoro  
+**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, Phase 3 layout/navigation, Phase 4 world clock, Phase 5 countdown timer, Phase 6 stopwatch, Phase 7 Pomodoro, Phase 8 alarm system, and Phase 9 local calendar  
 **In Progress:** Planning documentation  
-**Next:** Run `npm run dev` locally, then begin Phase 8 alarm system implementation
+**Next:** Run `npm run dev` locally, then begin Phase 10 cross-cutting features
