@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 7 Pomodoro Complete  
+**Current Stage:** Phase 8 Alarm System Complete  
 **Last Updated:** 2026-06-25  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -51,6 +51,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Phase 5 countdown timer implemented | The Countdown Timer tab now has validated HH/MM/SS inputs, preset durations, a circular progress ring, start/pause/resume/reset controls, accurate `Date.now()` timing, completion sound, and optional browser notification. | Completed |
 | 2026-06-25 | Phase 6 stopwatch implemented | The Stopwatch tab now has accurate `performance.now()` timing, start/stop/resume/reset controls, lap recording, best/worst lap highlighting, animated lap history, and copy-to-clipboard export. | Completed |
 | 2026-06-25 | Phase 7 Pomodoro implemented | The Pomodoro tab now has focus and break phases, short and long breaks, cycle indicators, persisted stats, streak tracking, completion sound, and optional browser notification. | Completed |
+| 2026-06-25 | Phase 8 Alarm System implemented | The Alarm tab now has alarm CRUD, enable/disable controls, repeat days, sound selection and preview, ringing overlay, snooze/dismiss, notifications, LocalStorage persistence, and alarm tab badge support. | Completed |
 
 ---
 
@@ -68,7 +69,7 @@ The goal is to keep a clear record of:
 
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
-| High     | Start Phase 8 Alarm System tab | Build alarm list management, create/edit/delete flows, day selection, snooze, dismiss, and ringing behavior. | Not Started |
+| High     | Start Phase 9 Local Calendar tab | Build local calendar month view, event list, create/edit/delete flows, and LocalStorage event persistence. | Not Started |
 | High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine.                                  | Blocked Here |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
@@ -92,7 +93,7 @@ The goal is to keep a clear record of:
 | Countdown Timer        | Yes     | No          | Yes       | Countdown input, presets, progress ring, controls, completion sound, and optional browser notification implemented |
 | Stopwatch              | Yes     | No          | Yes       | Accurate stopwatch timing, controls, lap recording, best/worst highlighting, animated lap list, and copy export implemented |
 | Pomodoro               | Yes     | No          | Yes       | Focus/break timer, short and long breaks, cycle indicators, stats persistence, streak tracking, sound, and notifications implemented |
-| Alarm System           | Yes     | No          | No        | Placeholder files created; shared alarm storage hook is ready |
+| Alarm System           | Yes     | No          | Yes       | Alarm CRUD, repeat days, sound preview, ringing overlay, snooze/dismiss, notifications, LocalStorage persistence, and tab badge implemented |
 | Local Calendar         | Yes     | No          | No        | Placeholder files created; event management not implemented yet |
 | Notifications          | Yes     | No          | Yes       | Browser-safe notification permission and send hook implemented |
 | Audio Alerts           | Yes     | No          | Yes       | Web Audio API oscillator-based alert manager implemented |
@@ -163,6 +164,15 @@ The goal is to keep a clear record of:
 - Added persisted Pomodoro stats for completed sessions, total focus minutes, streak, and last completion date
 - Added `PomodoroRing` with phase labels, remaining time, accessible progress display, focus color, and break color
 - Added a full `PomodoroTab` with controls, cycle indicators, stats panel, completion sound, and optional browser notifications
+- Added shared alarm constants and helpers in `lib/alarms.ts`
+- Added `snoozeUntil` support to the shared `Alarm` type
+- Added full alarm storage, CRUD, matching, duplicate-trigger protection, snooze, active ringing state, sound, and notification behavior in `useAlarms`
+- Added `AlarmCard` with time display, label, repeat-day badges, sound badge, enable/disable toggle, edit action, delete action, and Framer Motion animation
+- Added `AlarmModal` with create/edit modes, time input, label input, repeat-day selection, sound selection, sound preview, validation, and modal animation
+- Added a full `AlarmTab` with alarm list management, empty state, notification permission prompt, 20-alarm limit, sorted alarm list, and responsive controls
+- Added a global alarm ringing overlay with snooze and dismiss actions
+- Connected the Alarm tab to `AppShell`
+- Connected enabled-alarm badge state to `TabBar`
 
 #### Changed
 
@@ -185,6 +195,8 @@ The goal is to keep a clear record of:
 - Replaced the Pomodoro placeholder in `AppShell` with the real `PomodoroTab`.
 - Updated `usePomodoro` from basic placeholder transitions to full Pomodoro phase, cycle, long-break, and stats management.
 - Updated `useTimer` to keep the completion callback in a ref so effect-driven timer starts do not depend on changing callback identities.
+- Replaced the Alarm System placeholder in `AppShell` with the real `AlarmTab`.
+- Updated `AppShell` to own one shared alarm controller so alarm checking remains active across tab changes.
 
 #### Fixed
 
@@ -208,6 +220,8 @@ The goal is to keep a clear record of:
 - Phase 6 verification passed with `npm run lint`.
 - Phase 7 verification passed with `npx tsc --noEmit`.
 - Phase 7 verification passed with `npm run lint`.
+- Phase 8 verification passed with `npx tsc --noEmit`.
+- Phase 8 verification passed with `npm run lint`.
 
 #### Not Verified Here
 

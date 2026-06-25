@@ -26,6 +26,7 @@ export interface Alarm {
   days: DayOfWeek[];
   enabled: boolean;
   sound: AlarmSound;
+  snoozeUntil?: string;
 }
 
 export interface CalendarEvent {

@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect } from "react";
+import { AlarmRingingOverlay, AlarmTab } from "@/components/alarm/AlarmTab";
 import { ClockTab } from "@/components/clock/ClockTab";
 import { CountdownTab } from "@/components/countdown/CountdownTab";
 import { GlowBackground } from "@/components/layout/GlowBackground";
@@ -9,6 +10,7 @@ import { TabBar } from "@/components/layout/TabBar";
 import { PomodoroTab } from "@/components/pomodoro/PomodoroTab";
 import { StopwatchTab } from "@/components/stopwatch/StopwatchTab";
 import { GlassPanel } from "@/components/ui/GlassPanel";
+import { useAlarms, type UseAlarmsReturn } from "@/hooks/useAlarms";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/storage-keys";
 import { isTabId, TABS } from "@/lib/tabs";
@@ -80,7 +82,13 @@ function PlaceholderPanel({ activeTab }: { activeTab: TabId }) {
   );
 }
 
-function ActivePanel({ activeTab }: { activeTab: TabId }) {
+function ActivePanel({
+  activeTab,
+  alarmController,
+}: {
+  activeTab: TabId;
+  alarmController: UseAlarmsReturn;
+}) {
   if (activeTab === "clock") {
     return <ClockTab />;
   }
@@ -97,6 +105,10 @@ function ActivePanel({ activeTab }: { activeTab: TabId }) {
     return <PomodoroTab />;
   }
 
+  if (activeTab === "alarm") {
+    return <AlarmTab alarmController={alarmController} />;
+  }
+
   return <PlaceholderPanel activeTab={activeTab} />;
 }
 
@@ -106,6 +118,7 @@ export function AppShell() {
     STORAGE_KEYS.ACTIVE_TAB,
     "clock",
   );
+  const alarmController = useAlarms();
 
   useEffect(() => {
     if (!isTabId(activeTab)) {
@@ -136,7 +149,11 @@ export function AppShell() {
             </p>
           </div>
 
-          <TabBar activeTab={safeActiveTab} onTabChange={setActiveTab} />
+          <TabBar
+            activeTab={safeActiveTab}
+            onTabChange={setActiveTab}
+            hasEnabledAlarm={alarmController.hasEnabledAlarm}
+          />
         </header>
 
         <section className="mx-auto w-full max-w-5xl">
@@ -149,11 +166,24 @@ export function AppShell() {
               exit={reduceMotion ? undefined : "exit"}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <ActivePanel activeTab={safeActiveTab} />
+              <ActivePanel
+                activeTab={safeActiveTab}
+                alarmController={alarmController}
+              />
             </motion.div>
           </AnimatePresence>
         </section>
       </main>
+
+      <AnimatePresence>
+        {alarmController.activeAlarm && (
+          <AlarmRingingOverlay
+            alarm={alarmController.activeAlarm}
+            onDismiss={alarmController.dismissAlarm}
+            onSnooze={alarmController.snoozeAlarm}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }
