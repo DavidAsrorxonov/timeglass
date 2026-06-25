@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { supportsNotifications } from "@/lib/browser-support";
 
 export function useNotifications() {
-  const isSupported =
-    typeof window !== "undefined" && "Notification" in window;
+  const isSupported = supportsNotifications();
 
   const [permission, setPermission] =
     useState<NotificationPermission>("default");
@@ -25,7 +25,6 @@ export function useNotifications() {
 
   const requestPermission = useCallback(async () => {
     if (!isSupported) {
-      setPermission("denied");
       return "denied" as NotificationPermission;
     }
 

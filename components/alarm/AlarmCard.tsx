@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Pencil, Trash2 } from "lucide-react";
 import type { Alarm } from "@/types";
 import { ALARM_SOUNDS, DAYS_OF_WEEK, formatAlarmTime } from "@/lib/alarms";
@@ -24,14 +24,16 @@ export function AlarmCard({
   onEdit,
   onDelete,
 }: AlarmCardProps) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.22, ease: "easeOut" }}
+      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+      animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
+      whileHover={reduceMotion ? undefined : { y: -2 }}
+      transition={{ duration: reduceMotion ? 0 : 0.22, ease: "easeOut" }}
       className={`glass-panel p-5 transition ${
         alarm.enabled ? "opacity-100" : "opacity-60"
       }`}
@@ -77,7 +79,7 @@ export function AlarmCard({
           onClick={() => onToggle(alarm.id)}
           aria-label={alarm.enabled ? "Disable alarm" : "Enable alarm"}
           aria-pressed={alarm.enabled}
-          className={`relative h-8 w-14 shrink-0 rounded-full border transition ${
+          className={`focus-ring relative h-8 w-14 shrink-0 rounded-full border transition ${
             alarm.enabled
               ? "border-(--accent-primary) bg-(--accent-primary)/30"
               : "border-white/10 bg-white/5"
@@ -86,7 +88,7 @@ export function AlarmCard({
           <motion.span
             className="absolute top-1 size-6 rounded-full bg-white shadow"
             animate={{ x: alarm.enabled ? 24 : 4 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
           />
         </button>
       </div>
@@ -95,7 +97,7 @@ export function AlarmCard({
         <button
           type="button"
           onClick={() => onEdit(alarm)}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary)"
         >
           <Pencil className="size-4" aria-hidden="true" />
           Edit
@@ -104,7 +106,7 @@ export function AlarmCard({
         <button
           type="button"
           onClick={() => onDelete(alarm.id)}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-danger) hover:text-(--accent-danger)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-danger) hover:text-(--accent-danger)"
         >
           <Trash2 className="size-4" aria-hidden="true" />
           Delete

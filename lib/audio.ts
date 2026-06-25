@@ -1,4 +1,5 @@
 import type { AlarmSound } from "@/types";
+import { supportsAudioContext } from "@/lib/browser-support";
 
 declare global {
   interface Window {
@@ -13,7 +14,7 @@ class AudioManagerClass {
   private oscillators: OscillatorNode[] = [];
 
   private getContext() {
-    if (typeof window === "undefined") {
+    if (!supportsAudioContext()) {
       return null;
     }
 

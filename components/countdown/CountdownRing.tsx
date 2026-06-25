@@ -45,7 +45,10 @@ export function CountdownRing({
         animate={
           isDone && !reduceMotion ? { scale: [1, 1.035, 1] } : undefined
         }
-        transition={{ duration: 0.8, repeat: isDone ? Infinity : 0 }}
+        transition={{
+          duration: reduceMotion ? 0 : 0.8,
+          repeat: isDone && !reduceMotion ? Infinity : 0,
+        }}
       >
         <CircularProgress
           value={progress}

@@ -8,6 +8,7 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useTimer } from "@/hooks/useTimer";
 import { AudioManager } from "@/lib/audio";
+import { BROWSER_TIMER_LIMITATION } from "@/lib/limitations";
 
 const PRESETS = [
   { label: "5m", value: 5 * 60 * 1000 },
@@ -102,6 +103,9 @@ export function CountdownTab() {
         <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">
           Countdown Timer
         </h2>
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-(--text-muted)">
+          {BROWSER_TIMER_LIMITATION}
+        </p>
       </div>
 
       <CountdownRing
@@ -115,7 +119,7 @@ export function CountdownTab() {
           type="button"
           onClick={handlePrimaryAction}
           disabled={!canStart && !isRunning && !isPaused}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow) disabled:cursor-not-allowed disabled:opacity-40"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow) disabled:cursor-not-allowed disabled:opacity-40"
         >
           {isRunning ? (
             <Pause className="size-4" aria-hidden="true" />
@@ -128,7 +132,7 @@ export function CountdownTab() {
         <button
           type="button"
           onClick={handleReset}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-primary)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-primary)"
         >
           <RotateCcw className="size-4" aria-hidden="true" />
           Reset
@@ -151,7 +155,7 @@ export function CountdownTab() {
               type="button"
               onClick={() => handlePreset(preset.value)}
               disabled={isRunning}
-              className="min-h-11 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
+              className="focus-ring min-h-11 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
             >
               {preset.label}
             </button>

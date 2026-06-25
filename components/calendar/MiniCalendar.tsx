@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useMemo } from "react";
 import { IconButton } from "@/components/ui/IconButton";
@@ -81,6 +81,7 @@ export function MiniCalendar({
   onNextMonth,
   onToday,
 }: MiniCalendarProps) {
+  const reduceMotion = useReducedMotion();
   const days = useMemo(
     () => buildMonthGrid(visibleMonth, selectedDate, eventDateKeys),
     [eventDateKeys, selectedDate, visibleMonth],
@@ -108,7 +109,7 @@ export function MiniCalendar({
           <button
             type="button"
             onClick={onToday}
-            className="inline-flex min-h-10 items-center justify-center rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary) hover:bg-white/8"
+            className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary) hover:bg-white/8"
           >
             Today
           </button>
@@ -156,11 +157,11 @@ export function MiniCalendar({
               key={day.dateKey}
               type="button"
               onClick={() => onSelectDate(day.date)}
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={reduceMotion ? undefined : { y: -1 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
               aria-pressed={day.isSelected}
               aria-label={labelParts.join(", ")}
-              className={`relative flex aspect-square min-h-11 flex-col items-center justify-center rounded-lg border text-sm font-medium transition ${activeClass} ${mutedClass}`}
+              className={`focus-ring relative flex aspect-square min-h-11 flex-col items-center justify-center rounded-lg border text-sm font-medium transition ${activeClass} ${mutedClass}`}
             >
               <span>{day.dayNumber}</span>
               {day.hasEvents && (

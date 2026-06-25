@@ -8,6 +8,7 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { FOCUS_DURATION, usePomodoro } from "@/hooks/usePomodoro";
 import { useTimer } from "@/hooks/useTimer";
 import { AudioManager } from "@/lib/audio";
+import { BROWSER_TIMER_LIMITATION } from "@/lib/limitations";
 
 const STAT_ITEMS = [
   {
@@ -127,6 +128,9 @@ export function PomodoroTab() {
         <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">
           Focus deeply, then rest.
         </h2>
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-(--text-muted)">
+          {BROWSER_TIMER_LIMITATION}
+        </p>
       </div>
 
       <PomodoroRing
@@ -140,7 +144,7 @@ export function PomodoroTab() {
         <button
           type="button"
           onClick={handlePrimaryAction}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
         >
           {isRunning ? (
             <Pause className="size-4" aria-hidden="true" />
@@ -154,7 +158,7 @@ export function PomodoroTab() {
           type="button"
           onClick={handleSkip}
           disabled={isIdle}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
         >
           <SkipForward className="size-4" aria-hidden="true" />
           Skip
@@ -163,7 +167,7 @@ export function PomodoroTab() {
         <button
           type="button"
           onClick={handleReset}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-danger)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-danger)"
         >
           <RotateCcw className="size-4" aria-hidden="true" />
           Reset

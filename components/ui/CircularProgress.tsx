@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useId } from "react";
 
 type CircularProgressProps = {
@@ -20,6 +20,7 @@ export function CircularProgress({
   danger = false,
   success = false,
 }: CircularProgressProps) {
+  const reduceMotion = useReducedMotion();
   const safeValue = Math.min(1, Math.max(0, value));
   const filterId = useId().replaceAll(":", "");
   const radius = (size - strokeWidth * 3) / 2;
@@ -73,7 +74,7 @@ export function CircularProgress({
         stroke={color}
         strokeDasharray={circumference}
         animate={{ strokeDashoffset: dashOffset }}
-        transition={{ duration: 0.25, ease: "linear" }}
+        transition={{ duration: reduceMotion ? 0 : 0.25, ease: "linear" }}
         strokeLinecap="round"
         strokeWidth={strokeWidth}
         strokeOpacity={0.42}
@@ -92,7 +93,7 @@ export function CircularProgress({
         stroke={color}
         strokeDasharray={circumference}
         animate={{ strokeDashoffset: dashOffset }}
-        transition={{ duration: 0.25, ease: "linear" }}
+        transition={{ duration: reduceMotion ? 0 : 0.25, ease: "linear" }}
         strokeLinecap="round"
         strokeWidth={strokeWidth}
         style={{

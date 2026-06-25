@@ -111,7 +111,7 @@ export function StopwatchTab() {
           type="button"
           onClick={stopwatch.lap}
           disabled={!isRunning}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Flag className="size-4" aria-hidden="true" />
           Lap
@@ -120,7 +120,7 @@ export function StopwatchTab() {
         <button
           type="button"
           onClick={handlePrimaryAction}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
         >
           {isRunning ? (
             <Pause className="size-4" aria-hidden="true" />
@@ -134,7 +134,7 @@ export function StopwatchTab() {
           type="button"
           onClick={stopwatch.reset}
           disabled={!canReset}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-danger) disabled:cursor-not-allowed disabled:opacity-40"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-danger) disabled:cursor-not-allowed disabled:opacity-40"
         >
           <RotateCcw className="size-4" aria-hidden="true" />
           Reset

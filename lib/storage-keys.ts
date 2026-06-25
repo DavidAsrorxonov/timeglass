@@ -6,4 +6,5 @@ export const STORAGE_KEYS = {
   CALENDAR_EVENTS: "timeglass:calendar-events",
   POMODORO_STATS: "timeglass:pomodoro-stats",
   NOTIFICATION_PERMISSION: "timeglass:notification-permission",
+  NOTIFICATION_BANNER_DISMISSED: "timeglass:notification-banner-dismissed",
 } as const;

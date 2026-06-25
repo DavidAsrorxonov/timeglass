@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { CircularProgress } from "@/components/ui/CircularProgress";
 import type { PomodoroPhase } from "@/types";
 
@@ -28,6 +28,7 @@ export function PomodoroRing({
   progress,
   isLongBreak = false,
 }: PomodoroRingProps) {
+  const reduceMotion = useReducedMotion();
   const isBreak = phase === "break";
   const label =
     phase === "idle"
@@ -44,7 +45,9 @@ export function PomodoroRing({
         ? "Rest and reset."
         : "Stay with one task.";
   const animation =
-    phase === "idle" ? undefined : { scale: isBreak ? [1, 1.01, 1] : [1, 1.015, 1] };
+    phase === "idle" || reduceMotion
+      ? undefined
+      : { scale: isBreak ? [1, 1.01, 1] : [1, 1.015, 1] };
 
   return (
     <div
@@ -53,7 +56,11 @@ export function PomodoroRing({
     >
       <motion.div
         animate={animation}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        transition={{
+          duration: reduceMotion ? 0 : 3,
+          repeat: reduceMotion ? 0 : Infinity,
+          ease: "easeInOut",
+        }}
       >
         <CircularProgress
           value={progress}

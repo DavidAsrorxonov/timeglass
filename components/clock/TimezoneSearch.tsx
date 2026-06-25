@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
 import { GlassPanel } from "@/components/ui/GlassPanel";
@@ -18,6 +18,7 @@ export function TimezoneSearch({
   onAdd,
   onClose,
 }: TimezoneSearchProps) {
+  const reduceMotion = useReducedMotion();
   const [query, setQuery] = useState("");
 
   const savedIds = useMemo(() => {
@@ -43,16 +44,16 @@ export function TimezoneSearch({
   return (
     <motion.div
       className="fixed inset-0 z-50 flex items-end bg-black/50 p-4 backdrop-blur-sm sm:items-center sm:justify-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={reduceMotion ? undefined : { opacity: 1 }}
+      exit={reduceMotion ? undefined : { opacity: 0 }}
     >
       <motion.div
         className="w-full max-w-xl"
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 24 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
+        initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+        animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+        exit={reduceMotion ? undefined : { opacity: 0, y: 24 }}
+        transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
       >
         <GlassPanel className="p-5">
           <div className="flex items-start justify-between gap-4">
@@ -68,7 +69,7 @@ export function TimezoneSearch({
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg p-2 text-(--text-muted) transition hover:bg-white/8 hover:text-white"
+              className="focus-ring rounded-lg p-2 text-(--text-muted) transition hover:bg-white/8 hover:text-white"
               aria-label="Close timezone search"
               title="Close timezone search"
             >
@@ -83,7 +84,7 @@ export function TimezoneSearch({
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search Tokyo, Tashkent, London..."
-              className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-(--text-muted)"
+              className="focus-ring w-full rounded-lg bg-transparent text-sm text-foreground placeholder:text-(--text-muted)"
               autoFocus
             />
           </label>
@@ -98,7 +99,7 @@ export function TimezoneSearch({
                   type="button"
                   disabled={alreadyAdded}
                   onClick={() => onAdd({ ...timezone, pinned: false })}
-                  className="flex w-full items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
+                  className="focus-ring flex w-full items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <span className="min-w-0">
                     <span className="block truncate font-medium text-foreground">

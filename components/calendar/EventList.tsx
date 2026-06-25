@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Pencil, Plus, Save, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import type { CalendarEvent } from "@/types";
@@ -47,6 +47,7 @@ export function EventList({
   onUpdateEvent,
   onDeleteEvent,
 }: EventListProps) {
+  const reduceMotion = useReducedMotion();
   const [isAdding, setIsAdding] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
@@ -135,7 +136,7 @@ export function EventList({
         <button
           type="button"
           onClick={openAddForm}
-          className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-4 py-2 text-sm font-semibold text-white shadow-[0_0_20px_rgba(124,107,255,0.3)] transition hover:bg-(--accent-glow)"
+          className="focus-ring inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-4 py-2 text-sm font-semibold text-white shadow-[0_0_20px_rgba(124,107,255,0.3)] transition hover:bg-(--accent-glow)"
         >
           <Plus className="size-4" aria-hidden="true" />
           Add
@@ -145,9 +146,9 @@ export function EventList({
       {events.length === 0 && !isFormOpen ? (
         <motion.div
           className="mt-6 rounded-lg border border-white/10 bg-white/[0.03] p-6 text-center"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.22, ease: "easeOut" }}
+          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.22, ease: "easeOut" }}
         >
           <p className="text-lg font-medium text-foreground">
             Nothing scheduled
@@ -163,10 +164,13 @@ export function EventList({
               <motion.article
                 key={event.id}
                 layout
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.2,
+                  ease: "easeOut",
+                }}
                 className="rounded-lg border border-white/10 bg-white/[0.04] p-4"
               >
                 <div className="flex items-start justify-between gap-3">
@@ -191,7 +195,7 @@ export function EventList({
                     <button
                       type="button"
                       onClick={() => startEditing(event)}
-                      className="inline-flex size-9 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-primary) hover:text-foreground"
+                      className="focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-primary) hover:text-foreground"
                       aria-label={`Edit ${event.title}`}
                     >
                       <Pencil className="size-4" aria-hidden="true" />
@@ -200,7 +204,7 @@ export function EventList({
                     <button
                       type="button"
                       onClick={() => onDeleteEvent(event.id)}
-                      className="inline-flex size-9 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-danger) hover:text-(--accent-danger)"
+                      className="focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-danger) hover:text-(--accent-danger)"
                       aria-label={`Delete ${event.title}`}
                     >
                       <Trash2 className="size-4" aria-hidden="true" />
@@ -217,10 +221,10 @@ export function EventList({
         {isFormOpen && (
           <motion.div
             className="mt-6 rounded-lg border border-white/10 bg-white/[0.04] p-4"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+            animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
           >
             <div className="flex items-center justify-between gap-3">
               <h3 className="text-lg font-semibold text-foreground">
@@ -229,7 +233,7 @@ export function EventList({
               <button
                 type="button"
                 onClick={resetForm}
-                className="inline-flex size-9 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-danger) hover:text-foreground"
+                className="focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-danger) hover:text-foreground"
                 aria-label="Close event form"
               >
                 <X className="size-4" aria-hidden="true" />
@@ -247,7 +251,7 @@ export function EventList({
                   onChange={(event) => setTitle(event.target.value)}
                   placeholder="Study session"
                   maxLength={80}
-                  className="glass-panel w-full px-4 py-3 text-foreground outline-none placeholder:text-(--text-muted) focus:border-(--accent-primary)"
+                  className="focus-ring glass-panel w-full px-4 py-3 text-foreground placeholder:text-(--text-muted) focus:border-(--accent-primary)"
                 />
               </label>
 
@@ -259,7 +263,7 @@ export function EventList({
                   type="time"
                   value={time}
                   onChange={(event) => setTime(event.target.value)}
-                  className="glass-panel w-full px-4 py-3 font-mono text-foreground outline-none focus:border-(--accent-primary)"
+                  className="focus-ring glass-panel w-full px-4 py-3 font-mono text-foreground focus:border-(--accent-primary)"
                 />
               </label>
 
@@ -276,7 +280,7 @@ export function EventList({
                         onClick={() => setColor(item)}
                         aria-label={`Select event color ${item}`}
                         aria-pressed={active}
-                        className={`size-9 rounded-lg border-2 transition ${
+                        className={`focus-ring size-11 rounded-lg border-2 transition ${
                           active
                             ? "border-white shadow-[0_0_14px_rgba(255,255,255,0.25)]"
                             : "border-transparent hover:border-white/50"
@@ -292,7 +296,7 @@ export function EventList({
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-danger)"
+                  className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-danger)"
                 >
                   <X className="size-4" aria-hidden="true" />
                   Cancel
@@ -302,7 +306,7 @@ export function EventList({
                   type="button"
                   onClick={saveEvent}
                   disabled={!title.trim()}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-4 py-2 text-sm font-semibold text-white transition hover:bg-(--accent-glow) disabled:cursor-not-allowed disabled:opacity-40"
+                  className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-4 py-2 text-sm font-semibold text-white transition hover:bg-(--accent-glow) disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Save className="size-4" aria-hidden="true" />
                   Save

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Clipboard, Flag } from "lucide-react";
 import type { LapEntry } from "@/types";
 
@@ -29,6 +29,8 @@ export function LapList({
   worstLapIndex,
   onCopy,
 }: LapListProps) {
+  const reduceMotion = useReducedMotion();
+
   if (laps.length === 0) {
     return (
       <div className="glass-panel mt-6 p-6 text-center">
@@ -56,7 +58,7 @@ export function LapList({
         <button
           type="button"
           onClick={onCopy}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-foreground transition hover:border-(--accent-primary)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-foreground transition hover:border-(--accent-primary)"
         >
           <Clipboard className="size-4" aria-hidden="true" />
           Copy
@@ -85,10 +87,13 @@ export function LapList({
             return (
               <motion.div
                 key={lap.index}
-                initial={{ opacity: 0, y: -12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                initial={reduceMotion ? false : { opacity: 0, y: -12 }}
+                animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -12 }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.2,
+                  ease: "easeOut",
+                }}
                 className={`grid grid-cols-[0.55fr_1fr_1fr] border-b border-white/5 px-4 py-3 font-mono text-sm last:border-b-0 sm:grid-cols-[0.45fr_1fr_1fr_0.8fr] sm:px-5 ${textClass}`}
               >
                 <span>{lap.index}</span>

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
 import { AnalogClock } from "@/components/clock/AnalogClock";
@@ -16,6 +16,7 @@ import type { Timezone } from "@/types";
 const MAX_TIMEZONES = 8;
 
 export function ClockTab() {
+  const reduceMotion = useReducedMotion();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const [is24Hour, setIs24Hour] = useLocalStorage<boolean>(
@@ -112,7 +113,7 @@ export function ClockTab() {
             type="button"
             onClick={() => setIsSearchOpen(true)}
             disabled={reachedLimit}
-            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
+            className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Plus className="size-4" aria-hidden="true" />
             Add
@@ -136,9 +137,9 @@ export function ClockTab() {
         <AnimatePresence>
           {sortedTimezones.length === 0 && (
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 12 }}
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              exit={reduceMotion ? undefined : { opacity: 0, y: 12 }}
             >
               <GlassPanel className="p-6 text-center">
                 <p className="text-lg font-medium text-foreground">

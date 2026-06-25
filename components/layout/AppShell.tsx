@@ -8,12 +8,15 @@ import { ClockTab } from "@/components/clock/ClockTab";
 import { CountdownTab } from "@/components/countdown/CountdownTab";
 import { GlowBackground } from "@/components/layout/GlowBackground";
 import { TabBar } from "@/components/layout/TabBar";
+import { NotificationBanner } from "@/components/notifications/NotificationBanner";
 import { PomodoroTab } from "@/components/pomodoro/PomodoroTab";
 import { StopwatchTab } from "@/components/stopwatch/StopwatchTab";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useAlarms, type UseAlarmsReturn } from "@/hooks/useAlarms";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/storage-keys";
+import { TAB_SHORTCUT_HINT } from "@/lib/shortcuts";
 import { isTabId, TABS } from "@/lib/tabs";
 import type { TabId } from "@/types";
 
@@ -125,6 +128,10 @@ export function AppShell() {
   );
   const alarmController = useAlarms();
 
+  useKeyboardShortcuts({
+    onTabChange: setActiveTab,
+  });
+
   useEffect(() => {
     if (!isTabId(activeTab)) {
       setActiveTab("clock");
@@ -159,7 +166,13 @@ export function AppShell() {
             onTabChange={setActiveTab}
             hasEnabledAlarm={alarmController.hasEnabledAlarm}
           />
+
+          <p className="mt-3 text-center text-xs text-(--text-muted)">
+            {TAB_SHORTCUT_HINT}
+          </p>
         </header>
+
+        <NotificationBanner />
 
         <section className="mx-auto w-full max-w-5xl">
           <AnimatePresence mode="wait">
@@ -169,7 +182,7 @@ export function AppShell() {
               initial={reduceMotion ? false : "enter"}
               animate={reduceMotion ? undefined : "center"}
               exit={reduceMotion ? undefined : "exit"}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+              transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeOut" }}
             >
               <ActivePanel
                 activeTab={safeActiveTab}

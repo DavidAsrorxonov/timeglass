@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, Inter, JetBrains_Mono } from "next/font/google";
+import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -21,7 +22,13 @@ const jetBrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Timeglass",
   description:
-    "A modern clock, timer, alarm, stopwatch, Pomodoro, and calendar app.",
+    "A modern clock, timer, stopwatch, Pomodoro, alarm, and local calendar app.",
+  applicationName: "Timeglass",
+  appleWebApp: {
+    capable: true,
+    title: "Timeglass",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport: Viewport = {
@@ -39,6 +46,7 @@ export default function RootLayout({
         className={`${bebasNeue.variable} ${inter.variable} ${jetBrainsMono.variable}`}
       >
         {children}
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

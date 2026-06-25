@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AlarmClock, BellRing, Plus, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
 import { AlarmCard } from "@/components/alarm/AlarmCard";
@@ -9,6 +9,10 @@ import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { UseAlarmsReturn } from "@/hooks/useAlarms";
 import { useNotifications } from "@/hooks/useNotifications";
 import { formatAlarmTime } from "@/lib/alarms";
+import {
+  BROWSER_TIMER_LIMITATION,
+  PWA_ALARM_LIMITATION,
+} from "@/lib/limitations";
 import type { Alarm } from "@/types";
 
 const MAX_ALARMS = 20;
@@ -28,22 +32,26 @@ export function AlarmRingingOverlay({
   onDismiss,
   onSnooze,
 }: AlarmRingingOverlayProps) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.div
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4 backdrop-blur-xl"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={reduceMotion ? undefined : { opacity: 1 }}
+      exit={reduceMotion ? undefined : { opacity: 0 }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="ringing-alarm-title"
     >
       <GlassPanel className="w-full max-w-lg p-7 text-center sm:p-8">
         <motion.div
-          initial={{ opacity: 0, y: 18, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 18, scale: 0.98 }}
-          transition={{ duration: 0.24, ease: "easeOut" }}
+          initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.98 }}
+          animate={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+          exit={
+            reduceMotion ? undefined : { opacity: 0, y: 18, scale: 0.98 }
+          }
+          transition={{ duration: reduceMotion ? 0 : 0.24, ease: "easeOut" }}
         >
           <BellRing
             className="mx-auto size-10 text-(--accent-danger)"
@@ -69,7 +77,7 @@ export function AlarmRingingOverlay({
             <button
               type="button"
               onClick={() => onSnooze(alarm.id)}
-              className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/10 px-6 py-3 font-medium text-foreground transition hover:border-(--accent-primary)"
+              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-lg border border-white/10 px-6 py-3 font-medium text-foreground transition hover:border-(--accent-primary)"
             >
               Snooze 5 min
             </button>
@@ -77,7 +85,7 @@ export function AlarmRingingOverlay({
             <button
               type="button"
               onClick={onDismiss}
-              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-(--accent-danger) px-6 py-3 font-medium text-white transition hover:opacity-90"
+              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-lg bg-(--accent-danger) px-6 py-3 font-medium text-white transition hover:opacity-90"
             >
               Dismiss
             </button>
@@ -89,6 +97,7 @@ export function AlarmRingingOverlay({
 }
 
 export function AlarmTab({ alarmController }: AlarmTabProps) {
+  const reduceMotion = useReducedMotion();
   const alarms = alarmController;
   const notifications = useNotifications();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -146,8 +155,8 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
           </h2>
 
           <p className="mt-3 max-w-2xl text-sm leading-6 text-(--text-muted)">
-            Create local browser-based alarms. Alarms work while Timeglass is
-            open or active.
+            Create local browser-based alarms. {BROWSER_TIMER_LIMITATION}{" "}
+            {PWA_ALARM_LIMITATION}
           </p>
         </div>
 
@@ -155,7 +164,7 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
           type="button"
           onClick={openCreateModal}
           disabled={!canCreateAlarm}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-5 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow) disabled:cursor-not-allowed disabled:opacity-40"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-5 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow) disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Plus className="size-4" aria-hidden="true" />
           New Alarm
@@ -186,7 +195,7 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
           <button
             type="button"
             onClick={() => void notifications.requestPermission()}
-            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary)"
+            className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary)"
           >
             Enable
           </button>
@@ -202,9 +211,9 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
       {sortedAlarms.length === 0 ? (
         <motion.div
           className="mt-8 rounded-lg border border-white/10 bg-white/[0.03] p-8 text-center"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.24, ease: "easeOut" }}
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.24, ease: "easeOut" }}
         >
           <AlarmClock
             className="mx-auto size-10 text-(--text-muted)"

@@ -1,5 +1,6 @@
 "use client";
 
+import { useReducedMotion } from "framer-motion";
 import { useMemo } from "react";
 import { useClock } from "@/hooks/useClock";
 
@@ -14,11 +15,12 @@ export function AnalogClock({
   size = 260,
   compact = false,
 }: AnalogClockProps) {
+  const reduceMotion = useReducedMotion();
   const { hours, minutes, seconds, milliseconds } = useClock(timezone);
 
   const hourRotation = (hours % 12) * 30 + minutes * 0.5;
   const minuteRotation = minutes * 6;
-  const secondRotation = (seconds + milliseconds / 1000) * 6;
+  const secondRotation = (seconds + (reduceMotion ? 0 : milliseconds / 1000)) * 6;
 
   const ticks = useMemo(() => {
     return Array.from({ length: 60 }, (_, index) => {

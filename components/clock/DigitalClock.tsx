@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Clock3 } from "lucide-react";
 import { useSyncExternalStore } from "react";
 import { useClock } from "@/hooks/useClock";
@@ -30,16 +30,18 @@ function formatTime(
 }
 
 function AnimatedTimeSegment({ value }: { value: string }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <span className="relative inline-block min-w-[2ch] overflow-hidden align-baseline">
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={value}
           className="inline-block"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.18, ease: "easeOut" }}
+          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          exit={reduceMotion ? undefined : { opacity: 0, y: -10 }}
+          transition={{ duration: reduceMotion ? 0 : 0.18, ease: "easeOut" }}
         >
           {value}
         </motion.span>
@@ -117,7 +119,7 @@ export function DigitalClock({
       <button
         type="button"
         onClick={onToggleFormat}
-        className="mt-5 rounded-lg border border-white/10 px-4 py-2 text-sm text-foreground transition hover:border-(--accent-primary) hover:text-white"
+        className="focus-ring mt-5 min-h-11 rounded-lg border border-white/10 px-4 py-2 text-sm text-foreground transition hover:border-(--accent-primary) hover:text-white"
       >
         Switch to {is24Hour ? "12-hour" : "24-hour"} format
       </button>

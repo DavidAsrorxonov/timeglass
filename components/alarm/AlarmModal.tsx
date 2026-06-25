@@ -1,12 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Volume2, X } from "lucide-react";
 import type { FormEvent } from "react";
 import { useState } from "react";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { ALARM_SOUNDS, DAYS_OF_WEEK } from "@/lib/alarms";
 import { AudioManager } from "@/lib/audio";
+import { BROWSER_TIMER_LIMITATION } from "@/lib/limitations";
 import type { Alarm, AlarmSound, DayOfWeek } from "@/types";
 
 type AlarmModalProps = {
@@ -24,6 +25,7 @@ function createAlarmId() {
 }
 
 export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
+  const reduceMotion = useReducedMotion();
   const [time, setTime] = useState(alarm?.time ?? "07:00");
   const [label, setLabel] = useState(alarm?.label ?? "");
   const [days, setDays] = useState<DayOfWeek[]>(alarm?.days ?? []);
@@ -73,18 +75,18 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
   return (
     <motion.div
       className="fixed inset-0 z-50 flex items-end bg-black/65 p-4 backdrop-blur-md sm:items-center sm:justify-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      initial={reduceMotion ? false : { opacity: 0 }}
+      animate={reduceMotion ? undefined : { opacity: 1 }}
+      exit={reduceMotion ? undefined : { opacity: 0 }}
       role="presentation"
     >
       <GlassPanel className="w-full max-w-xl p-5 sm:p-6">
         <motion.form
           onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 24 }}
-          transition={{ duration: 0.24, ease: "easeOut" }}
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          exit={reduceMotion ? undefined : { opacity: 0, y: 24 }}
+          transition={{ duration: reduceMotion ? 0 : 0.24, ease: "easeOut" }}
         >
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -92,14 +94,14 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                 {isEditing ? "Edit Alarm" : "New Alarm"}
               </h2>
               <p className="mt-1 text-sm text-(--text-muted)">
-                Alarms work while Timeglass is open or active.
+                {BROWSER_TIMER_LIMITATION}
               </p>
             </div>
 
             <button
               type="button"
               onClick={handleClose}
-              className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-danger) hover:text-foreground"
+              className="focus-ring inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-danger) hover:text-foreground"
               aria-label="Close alarm modal"
             >
               <X className="size-5" aria-hidden="true" />
@@ -119,7 +121,7 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                   setTime(event.target.value);
                 }}
                 required
-                className="glass-panel w-full px-4 py-4 font-mono text-3xl text-foreground outline-none focus:border-(--accent-primary)"
+                className="focus-ring glass-panel w-full px-4 py-4 font-mono text-3xl text-foreground focus:border-(--accent-primary)"
               />
             </label>
 
@@ -133,7 +135,7 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                 onChange={(event) => setLabel(event.target.value)}
                 placeholder="Morning run"
                 maxLength={48}
-                className="glass-panel w-full px-4 py-3 text-foreground outline-none placeholder:text-(--text-muted) focus:border-(--accent-primary)"
+                className="focus-ring glass-panel w-full px-4 py-3 text-foreground placeholder:text-(--text-muted) focus:border-(--accent-primary)"
               />
             </label>
 
@@ -149,7 +151,7 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                       type="button"
                       onClick={() => toggleDay(day)}
                       aria-pressed={active}
-                      className={`min-h-11 rounded-lg border px-3.5 py-2 text-sm font-medium transition ${
+                      className={`focus-ring min-h-11 rounded-lg border px-3.5 py-2 text-sm font-medium transition ${
                         active
                           ? "border-(--accent-primary) bg-(--accent-primary)/25 text-white"
                           : "border-white/10 text-(--text-muted) hover:text-foreground"
@@ -177,7 +179,7 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                       type="button"
                       onClick={() => previewSound(item.value)}
                       aria-pressed={active}
-                      className={`rounded-lg border px-4 py-3 text-left transition ${
+                      className={`focus-ring rounded-lg border px-4 py-3 text-left transition ${
                         active
                           ? "border-(--accent-primary) bg-(--accent-primary)/20"
                           : "border-white/10 bg-white/[0.03] hover:border-(--accent-primary)"
@@ -207,14 +209,14 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
             <button
               type="button"
               onClick={handleClose}
-              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-5 py-3 font-medium text-foreground transition hover:border-(--accent-danger)"
+              className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-5 py-3 font-medium text-foreground transition hover:border-(--accent-danger)"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-(--accent-primary) px-5 py-3 font-medium text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
+              className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg bg-(--accent-primary) px-5 py-3 font-medium text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
             >
               Save Alarm
             </button>

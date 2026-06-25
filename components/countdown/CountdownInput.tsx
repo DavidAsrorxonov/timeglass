@@ -55,7 +55,7 @@ export function CountdownInput({
             disabled={disabled}
             aria-label={field.label}
             onChange={(event) => updateValue(field.key, event.target.value)}
-            className="glass-panel min-h-16 w-full px-2 py-3 text-center font-mono text-2xl text-foreground outline-none transition [appearance:textfield] focus:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-50 sm:text-3xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            className="focus-ring glass-panel min-h-16 w-full px-2 py-3 text-center font-mono text-2xl text-foreground transition [appearance:textfield] focus:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-50 sm:text-3xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             placeholder={field.shortLabel}
           />
         </label>
