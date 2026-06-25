@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect } from "react";
 import { ClockTab } from "@/components/clock/ClockTab";
+import { CountdownTab } from "@/components/countdown/CountdownTab";
 import { GlowBackground } from "@/components/layout/GlowBackground";
 import { TabBar } from "@/components/layout/TabBar";
 import { GlassPanel } from "@/components/ui/GlassPanel";
@@ -80,6 +81,10 @@ function PlaceholderPanel({ activeTab }: { activeTab: TabId }) {
 function ActivePanel({ activeTab }: { activeTab: TabId }) {
   if (activeTab === "clock") {
     return <ClockTab />;
+  }
+
+  if (activeTab === "countdown") {
+    return <CountdownTab />;
   }
 
   return <PlaceholderPanel activeTab={activeTab} />;
