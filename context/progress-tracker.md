@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 5 Countdown Timer Complete  
+**Current Stage:** Phase 6 Stopwatch Complete  
 **Last Updated:** 2026-06-25  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -49,6 +49,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Phase 3 layout and navigation implemented | AppShell now has six-tab navigation, animated panel transitions, responsive tab bar behavior, active tab persistence, shared tab metadata, glass panels, notification badge support, and animated background. | Completed |
 | 2026-06-25 | Phase 4 world clock implemented | The World Clock tab now has a live analog clock, digital clock, 12h / 24h preference, saved timezone cards, timezone search, pin/remove actions, empty state, and LocalStorage persistence. | Completed |
 | 2026-06-25 | Phase 5 countdown timer implemented | The Countdown Timer tab now has validated HH/MM/SS inputs, preset durations, a circular progress ring, start/pause/resume/reset controls, accurate `Date.now()` timing, completion sound, and optional browser notification. | Completed |
+| 2026-06-25 | Phase 6 stopwatch implemented | The Stopwatch tab now has accurate `performance.now()` timing, start/stop/resume/reset controls, lap recording, best/worst lap highlighting, animated lap history, and copy-to-clipboard export. | Completed |
 
 ---
 
@@ -66,7 +67,7 @@ The goal is to keep a clear record of:
 
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
-| High     | Start Phase 6 stopwatch tab | Build stopwatch timing logic, millisecond display, start/stop/reset controls, lap recording, and lap list behavior. | Not Started |
+| High     | Start Phase 7 Pomodoro tab | Build focus/break timer modes, Pomodoro cycles, session stats, long break behavior, and completion alerts. | Not Started |
 | High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine.                                  | Blocked Here |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
@@ -88,7 +89,7 @@ The goal is to keep a clear record of:
 | Layout & Navigation    | Yes     | No          | Yes       | Six-tab AppShell, TabBar, GlowBackground, GlassPanel, NotificationBadge, tab transitions, and active-tab persistence implemented |
 | World Clock            | Yes     | No          | Yes       | Live analog/digital clock, timezone cards, search, pin/remove actions, 12h / 24h format, and LocalStorage persistence implemented |
 | Countdown Timer        | Yes     | No          | Yes       | Countdown input, presets, progress ring, controls, completion sound, and optional browser notification implemented |
-| Stopwatch              | Yes     | No          | No        | Placeholder files created; stopwatch logic not implemented yet |
+| Stopwatch              | Yes     | No          | Yes       | Accurate stopwatch timing, controls, lap recording, best/worst highlighting, animated lap list, and copy export implemented |
 | Pomodoro               | Yes     | No          | No        | Placeholder files created; Pomodoro logic not implemented yet |
 | Alarm System           | Yes     | No          | No        | Placeholder files created; shared alarm storage hook is ready |
 | Local Calendar         | Yes     | No          | No        | Placeholder files created; event management not implemented yet |
@@ -149,6 +150,12 @@ The goal is to keep a clear record of:
 - Added `CountdownRing` with remaining time formatting, visible timer status, danger state, and done animation
 - Added `CountdownInput` with validated hours, minutes, and seconds fields
 - Added a full `CountdownTab` with presets, start, pause, resume, reset, completion sound, and optional browser notification
+- Added accurate stopwatch timing in `useStopwatch` using `performance.now()` and `requestAnimationFrame`
+- Added stopwatch start, stop, resume, reset, and lap controls
+- Added lap recording with split time and total elapsed time calculation
+- Added best lap and worst lap detection for multi-lap sessions
+- Added `LapList` with empty state, scrollable lap history, Framer Motion lap entry animation, and copy-to-clipboard action
+- Added a full `StopwatchTab` with large millisecond-precision display and responsive controls
 
 #### Changed
 
@@ -166,6 +173,8 @@ The goal is to keep a clear record of:
 - Fixed digital clock animation so seconds animate independently, while minute and hour segments animate only when their values change.
 - Replaced the Countdown Timer placeholder in `AppShell` with the real `CountdownTab`.
 - Updated `useTimer` from placeholder state transitions to full countdown lifecycle management with frame cleanup and duplicate completion protection.
+- Replaced the Stopwatch placeholder in `AppShell` with the real `StopwatchTab`.
+- Updated `useStopwatch` from placeholder state transitions to full stopwatch lifecycle management with animation-frame cleanup.
 
 #### Fixed
 
@@ -185,6 +194,8 @@ The goal is to keep a clear record of:
 - Phase 5 verification passed with `npm run lint`.
 - Countdown glow fix verification passed with `npx tsc --noEmit`.
 - Countdown glow fix verification passed with `npm run lint`.
+- Phase 6 verification passed with `npx tsc --noEmit`.
+- Phase 6 verification passed with `npm run lint`.
 
 #### Not Verified Here
 
@@ -226,20 +237,18 @@ These questions should be answered before or during development:
 
 ## Current Project Phase
 
-The project has completed **Phase 5 — Countdown Timer Tab**.
+The project has completed **Phase 6 — Stopwatch Tab**.
 
-The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, a complete World Clock tab, and a complete Countdown Timer tab.
+The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, a complete World Clock tab, a complete Countdown Timer tab, and a complete Stopwatch tab.
 
-Phase 5 added:
+Phase 6 added:
 
-1. Validated custom hours, minutes, and seconds input
-2. Quick preset duration buttons
-3. Circular countdown progress ring with danger and done states
-4. Large remaining time display with visible status labels
-5. Start, pause, resume, and reset controls
-6. Accurate `Date.now()`-based countdown logic
-7. Completion sound through `AudioManager`
-8. Browser notification sending when permission is already granted
+1. Large `HH:MM:SS.mmm` stopwatch display
+2. Start, stop, resume, reset, and lap controls
+3. Accurate `performance.now()`-based elapsed timing
+4. Split lap and total elapsed lap calculations
+5. Best and worst lap highlighting for multi-lap sessions
+6. Scrollable animated lap history with copy-to-clipboard export
 
 The next recommended implementation step is **Phase 6 — Stopwatch Tab**.
 

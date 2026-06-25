@@ -6,6 +6,7 @@ import { ClockTab } from "@/components/clock/ClockTab";
 import { CountdownTab } from "@/components/countdown/CountdownTab";
 import { GlowBackground } from "@/components/layout/GlowBackground";
 import { TabBar } from "@/components/layout/TabBar";
+import { StopwatchTab } from "@/components/stopwatch/StopwatchTab";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/storage-keys";
@@ -85,6 +86,10 @@ function ActivePanel({ activeTab }: { activeTab: TabId }) {
 
   if (activeTab === "countdown") {
     return <CountdownTab />;
+  }
+
+  if (activeTab === "stopwatch") {
+    return <StopwatchTab />;
   }
 
   return <PlaceholderPanel activeTab={activeTab} />;
