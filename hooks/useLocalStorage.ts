@@ -23,6 +23,12 @@ export function useLocalStorage<T>(
       const item = window.localStorage.getItem(key);
       return item ? (JSON.parse(item) as T) : defaultValueRef.current;
     } catch {
+      try {
+        window.localStorage.removeItem(key);
+      } catch {
+        // Ignore cleanup errors in restricted browsing contexts.
+      }
+
       return defaultValueRef.current;
     }
   }, [key]);

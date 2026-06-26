@@ -3,8 +3,8 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 10 Cross-Cutting Features Complete
-**Last Updated:** 2026-06-25  
+**Current Stage:** Phase 11 Polish & Final Details Complete
+**Last Updated:** 2026-06-26  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
 ---
@@ -54,6 +54,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Phase 8 Alarm System implemented | The Alarm tab now has alarm CRUD, enable/disable controls, repeat days, sound selection and preview, ringing overlay, snooze/dismiss, notifications, LocalStorage persistence, and alarm tab badge support. | Completed |
 | 2026-06-25 | Phase 9 Local Calendar implemented | The Calendar tab now has a 42-cell monthly grid, month navigation, today and selected-day states, local event CRUD, event colors, event sorting, and LocalStorage persistence. | Completed |
 | 2026-06-25 | Phase 10 cross-cutting features implemented | Timeglass now has a notification permission banner, global 1-6 tab shortcuts, responsive tab refinements, reduced motion support, focus utilities, browser support helpers, PWA manifest/icons, and a production-only service worker registration. | Completed |
+| 2026-06-26 | Phase 11 polish and final details implemented | Timeglass now has polished tab transitions, reusable empty states, final metadata and favicon/app icon references, tab and App Router error fallbacks, broken LocalStorage cleanup, and final verification pass results. | Completed |
 
 ---
 
@@ -71,8 +72,8 @@ The goal is to keep a clear record of:
 
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
-| High     | Start Phase 11 polish and final details | Add final empty-state polish, favicon refinement, metadata cleanup, error boundaries, performance checks, and final UI refinements. | Not Started |
-| High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine.                                  | Blocked Here |
+| High     | Start Phase 12 testing             | Add unit tests, hook tests, LocalStorage tests, timer tests, alarm tests, calendar tests, and a manual testing checklist. | Not Started |
+| High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine. The managed sandbox blocked binding to port 3000 and escalated startup was not approved here. | Blocked Here |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
 | High     | Create `features.md`               | Document all six main modules: World Clock, Countdown, Stopwatch, Pomodoro, Alarm, and Calendar.          | Not Started |
@@ -102,12 +103,45 @@ The goal is to keep a clear record of:
 | Core Infrastructure    | Yes     | No          | Yes       | Shared types, LocalStorage, notifications, audio, clock, timezone, and placeholder feature hooks implemented |
 | Cross-Cutting Features | Yes     | No          | Yes       | Notification banner, keyboard shortcuts, responsive tab refinements, reduced motion support, focus utilities, browser support helpers, and shared limitation notices implemented |
 | Keyboard Shortcuts     | Yes     | No          | Yes       | Pressing 1-6 switches tabs and ignores typing targets |
-| PWA Support            | Yes     | No          | Yes       | App manifest, placeholder icons, basic app-shell service worker, and production-only registration implemented |
+| PWA Support            | Yes     | No          | Yes       | App manifest, Timeglass favicon/app icons, basic app-shell service worker, and production-only registration implemented |
+| Polish & Final Details | Yes     | No          | Yes       | Final metadata, favicon, empty states, tab transitions, error fallbacks, LocalStorage cleanup, and verification pass implemented |
+| Error Boundaries       | Yes     | No          | Yes       | Tab-level error boundary plus App Router `error.tsx` and `not-found.tsx` fallbacks implemented |
 | Testing                | Yes     | No          | No        | Unit and integration tests planned                   |
 
 ---
 
 ## Change Log
+
+### 2026-06-26
+
+#### Added
+
+- Added reusable empty-state components for alarms, calendar events, stopwatch laps, and saved timezones.
+- Added `components/error/TabErrorBoundary.tsx` to keep a broken tab from crashing the whole app shell.
+- Added `app/error.tsx` with Next.js 16 App Router `unstable_retry` recovery support.
+- Added `app/not-found.tsx` with a polished Timeglass 404 fallback.
+- Added `public/favicon.svg` with a minimal Timeglass hourglass mark.
+- Added regenerated `public/icons/icon-192.png` and `public/icons/icon-512.png` Timeglass app icons.
+
+#### Changed
+
+- Updated `AppShell` tab transitions to use consistent enter, center, and exit variants with `AnimatePresence mode="wait"`.
+- Updated reduced-motion tab transitions to use opacity-only animation.
+- Wrapped active tab content in `TabErrorBoundary`.
+- Updated root metadata with title template, author, keywords, SVG favicon, and Apple icon metadata.
+- Replaced inline empty-state markup in Alarm, Calendar, Stopwatch, and World Clock with reusable designed empty states.
+- Updated `useLocalStorage` to remove broken LocalStorage values after JSON parsing or storage access failures.
+- Removed stale placeholder panel copy from `AppShell` now that all six primary tabs are implemented.
+
+#### Verified
+
+- Phase 11 verification passed with `npx tsc --noEmit`.
+- Phase 11 verification passed with `npm run lint`.
+- Phase 11 production build passed with `npm run build` after network-enabled execution allowed `next/font/google` to fetch Google Fonts.
+
+#### Not Verified Here
+
+- `npm run dev` could not bind to port 3000 in the managed sandbox (`listen EPERM`). Escalated dev-server startup was not approved here, so browser runtime verification is left for local user verification.
 
 ### 2026-06-25
 
@@ -264,10 +298,9 @@ The goal is to keep a clear record of:
 
 #### Not Started Yet
 
-- Remaining feature implementations
-- Full feature UI implementation
 - Testing setup
 - Deployment setup
+- Documentation files for design system, architecture, features, roadmap, and testing checklist
 
 ---
 
@@ -297,21 +330,21 @@ These questions should be answered before or during development:
 
 ## Current Project Phase
 
-The project has completed **Phase 10 — Cross-Cutting Features**.
+The project has completed **Phase 11 — Polish & Final Details**.
 
-The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, a complete World Clock tab, a complete Countdown Timer tab, a complete Stopwatch tab, a complete Pomodoro tab, a complete Alarm tab, a complete Local Calendar tab, and app-wide cross-cutting features.
+The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, polished animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, a complete World Clock tab, a complete Countdown Timer tab, a complete Stopwatch tab, a complete Pomodoro tab, a complete Alarm tab, a complete Local Calendar tab, app-wide cross-cutting features, and final polish/error handling details.
 
-Phase 10 added:
+Phase 11 added:
 
-1. User-initiated notification permission banner
-2. Global 1-6 tab-switching keyboard shortcuts
-3. Responsive tab bar refinement and shortcut hint
-4. Reduced motion support across shared animations
-5. Focus-ring and touch-target accessibility refinements
-6. PWA manifest, placeholder icons, service worker, and production-only registration
-7. Shared browser support helpers and browser/PWA limitation notices
+1. Reusable empty states for list-based features
+2. Tab-level error boundary recovery
+3. App Router error and not-found fallbacks
+4. Final metadata, icon, and favicon polish
+5. Broken LocalStorage value cleanup
+6. Reduced-motion-aware tab transition polish
+7. Final typecheck, lint, and production build verification
 
-The next recommended implementation step is **Phase 11 — Polish & Final Details**.
+The next recommended implementation step is **Phase 12 — Testing**.
 
 ---
 
@@ -352,6 +385,6 @@ Use this format for new change log entries:
 
 ## Short Status
 
-**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, Phase 3 layout/navigation, Phase 4 world clock, Phase 5 countdown timer, Phase 6 stopwatch, Phase 7 Pomodoro, Phase 8 alarm system, Phase 9 local calendar, and Phase 10 cross-cutting features
+**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, Phase 3 layout/navigation, Phase 4 world clock, Phase 5 countdown timer, Phase 6 stopwatch, Phase 7 Pomodoro, Phase 8 alarm system, Phase 9 local calendar, Phase 10 cross-cutting features, and Phase 11 polish/final details
 **In Progress:** Planning documentation  
-**Next:** Run `npm run dev` locally, then begin Phase 11 polish and final details
+**Next:** Run `npm run dev` locally, then begin Phase 12 testing

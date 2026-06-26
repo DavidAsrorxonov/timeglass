@@ -7,6 +7,7 @@ import { AnalogClock } from "@/components/clock/AnalogClock";
 import { DigitalClock } from "@/components/clock/DigitalClock";
 import { TimezoneCard } from "@/components/clock/TimezoneCard";
 import { TimezoneSearch } from "@/components/clock/TimezoneSearch";
+import { TimezoneEmptyState } from "@/components/empty-states/TimezoneEmptyState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/storage-keys";
@@ -141,14 +142,7 @@ export function ClockTab() {
               animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
               exit={reduceMotion ? undefined : { opacity: 0, y: 12 }}
             >
-              <GlassPanel className="p-6 text-center">
-                <p className="text-lg font-medium text-foreground">
-                  No saved timezones
-                </p>
-                <p className="mt-2 text-sm text-(--text-muted)">
-                  Add your first city to compare time around the world.
-                </p>
-              </GlassPanel>
+              <TimezoneEmptyState />
             </motion.div>
           )}
         </AnimatePresence>

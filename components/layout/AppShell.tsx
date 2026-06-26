@@ -6,18 +6,18 @@ import { AlarmRingingOverlay, AlarmTab } from "@/components/alarm/AlarmTab";
 import { CalendarTab } from "@/components/calendar/CalendarTab";
 import { ClockTab } from "@/components/clock/ClockTab";
 import { CountdownTab } from "@/components/countdown/CountdownTab";
+import { TabErrorBoundary } from "@/components/error/TabErrorBoundary";
 import { GlowBackground } from "@/components/layout/GlowBackground";
 import { TabBar } from "@/components/layout/TabBar";
 import { NotificationBanner } from "@/components/notifications/NotificationBanner";
 import { PomodoroTab } from "@/components/pomodoro/PomodoroTab";
 import { StopwatchTab } from "@/components/stopwatch/StopwatchTab";
-import { GlassPanel } from "@/components/ui/GlassPanel";
 import { useAlarms, type UseAlarmsReturn } from "@/hooks/useAlarms";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { STORAGE_KEYS } from "@/lib/storage-keys";
 import { TAB_SHORTCUT_HINT } from "@/lib/shortcuts";
-import { isTabId, TABS } from "@/lib/tabs";
+import { isTabId } from "@/lib/tabs";
 import type { TabId } from "@/types";
 
 const tabVariants = {
@@ -35,56 +35,17 @@ const tabVariants = {
   },
 };
 
-const panelContent: Record<TabId, { title: string; description: string }> = {
-  clock: {
-    title: "World Clock",
-    description:
-      "Analog clock, digital clock, and timezone cards will be built here.",
+const reducedTabVariants = {
+  enter: {
+    opacity: 0,
   },
-  countdown: {
-    title: "Countdown Timer",
-    description:
-      "Countdown input, presets, progress ring, and alerts will be built here.",
+  center: {
+    opacity: 1,
   },
-  stopwatch: {
-    title: "Stopwatch",
-    description:
-      "Stopwatch controls, millisecond display, and lap list will be built here.",
-  },
-  pomodoro: {
-    title: "Pomodoro",
-    description:
-      "Focus sessions, breaks, cycle tracking, and stats will be built here.",
-  },
-  alarm: {
-    title: "Alarm System",
-    description:
-      "Alarm creation, editing, snooze, dismiss, and alarm sounds will be built here.",
-  },
-  calendar: {
-    title: "Local Calendar",
-    description:
-      "Monthly calendar, local events, and event editing will be built here.",
+  exit: {
+    opacity: 0,
   },
 };
-
-function PlaceholderPanel({ activeTab }: { activeTab: TabId }) {
-  const content = panelContent[activeTab];
-
-  return (
-    <GlassPanel className="p-6 sm:p-8" glow>
-      <p className="font-mono text-xs uppercase tracking-[0.28em] text-(--accent-glow)">
-        {TABS.find((tab) => tab.id === activeTab)?.label}
-      </p>
-      <h2 className="mt-4 text-3xl font-semibold text-foreground">
-        {content.title}
-      </h2>
-      <p className="mt-3 max-w-2xl text-sm leading-6 text-(--text-muted) sm:text-base">
-        {content.description}
-      </p>
-    </GlassPanel>
-  );
-}
 
 function ActivePanel({
   activeTab,
@@ -117,7 +78,7 @@ function ActivePanel({
     return <CalendarTab />;
   }
 
-  return <PlaceholderPanel activeTab={activeTab} />;
+  return null;
 }
 
 export function AppShell() {
@@ -139,6 +100,7 @@ export function AppShell() {
   }, [activeTab, setActiveTab]);
 
   const safeActiveTab = isTabId(activeTab) ? activeTab : "clock";
+  const variants = reduceMotion ? reducedTabVariants : tabVariants;
 
   return (
     <>
@@ -178,16 +140,21 @@ export function AppShell() {
           <AnimatePresence mode="wait">
             <motion.div
               key={safeActiveTab}
-              variants={reduceMotion ? undefined : tabVariants}
-              initial={reduceMotion ? false : "enter"}
-              animate={reduceMotion ? undefined : "center"}
-              exit={reduceMotion ? undefined : "exit"}
-              transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeOut" }}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                duration: reduceMotion ? 0.18 : 0.28,
+                ease: "easeOut",
+              }}
             >
-              <ActivePanel
-                activeTab={safeActiveTab}
-                alarmController={alarmController}
-              />
+              <TabErrorBoundary resetKey={safeActiveTab}>
+                <ActivePanel
+                  activeTab={safeActiveTab}
+                  alarmController={alarmController}
+                />
+              </TabErrorBoundary>
             </motion.div>
           </AnimatePresence>
         </section>

@@ -1,10 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { AlarmClock, BellRing, Plus, ShieldCheck } from "lucide-react";
+import { BellRing, Plus, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
 import { AlarmCard } from "@/components/alarm/AlarmCard";
 import { AlarmModal } from "@/components/alarm/AlarmModal";
+import { AlarmEmptyState } from "@/components/empty-states/AlarmEmptyState";
 import { GlassPanel } from "@/components/ui/GlassPanel";
 import type { UseAlarmsReturn } from "@/hooks/useAlarms";
 import { useNotifications } from "@/hooks/useNotifications";
@@ -36,7 +37,7 @@ export function AlarmRingingOverlay({
 
   return (
     <motion.div
-      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4 backdrop-blur-xl"
+      className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4 backdrop-blur-xl"
       initial={reduceMotion ? false : { opacity: 0 }}
       animate={reduceMotion ? undefined : { opacity: 1 }}
       exit={reduceMotion ? undefined : { opacity: 0 }}
@@ -48,9 +49,7 @@ export function AlarmRingingOverlay({
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 18, scale: 0.98 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
-          exit={
-            reduceMotion ? undefined : { opacity: 0, y: 18, scale: 0.98 }
-          }
+          exit={reduceMotion ? undefined : { opacity: 0, y: 18, scale: 0.98 }}
           transition={{ duration: reduceMotion ? 0 : 0.24, ease: "easeOut" }}
         >
           <BellRing
@@ -171,7 +170,7 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
         </button>
       </div>
 
-      <div className="mt-6 flex flex-col gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-6 flex flex-col gap-3 rounded-lg border border-white/10 bg-white/3 p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <ShieldCheck
             className="mt-0.5 size-5 shrink-0 text-(--accent-success)"
@@ -210,23 +209,11 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
 
       {sortedAlarms.length === 0 ? (
         <motion.div
-          className="mt-8 rounded-lg border border-white/10 bg-white/[0.03] p-8 text-center"
           initial={reduceMotion ? false : { opacity: 0, y: 12 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.24, ease: "easeOut" }}
         >
-          <AlarmClock
-            className="mx-auto size-10 text-(--text-muted)"
-            aria-hidden="true"
-          />
-
-          <p className="mt-4 text-lg font-medium text-foreground">
-            No alarms set
-          </p>
-
-          <p className="mt-2 text-sm text-(--text-muted)">
-            Create your first alarm to get started.
-          </p>
+          <AlarmEmptyState />
         </motion.div>
       ) : (
         <motion.div layout className="mt-8 grid gap-4">

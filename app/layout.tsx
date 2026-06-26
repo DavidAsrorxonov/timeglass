@@ -20,10 +20,38 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Timeglass",
+  title: {
+    default: "Timeglass",
+    template: "%s | Timeglass",
+  },
   description:
     "A modern clock, timer, stopwatch, Pomodoro, alarm, and local calendar app.",
   applicationName: "Timeglass",
+  authors: [{ name: "David" }],
+  keywords: [
+    "clock",
+    "timer",
+    "stopwatch",
+    "pomodoro",
+    "alarm",
+    "calendar",
+    "productivity",
+  ],
+  icons: {
+    icon: [
+      {
+        url: "/favicon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    apple: [
+      {
+        url: "/icons/icon-192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+    ],
+  },
   appleWebApp: {
     capable: true,
     title: "Timeglass",

@@ -1,7 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Clipboard, Flag } from "lucide-react";
+import { Clipboard } from "lucide-react";
+import { LapEmptyState } from "@/components/empty-states/LapEmptyState";
 import type { LapEntry } from "@/types";
 
 type LapListProps = {
@@ -32,17 +33,7 @@ export function LapList({
   const reduceMotion = useReducedMotion();
 
   if (laps.length === 0) {
-    return (
-      <div className="glass-panel mt-6 p-6 text-center">
-        <Flag className="mx-auto size-7 text-(--text-muted)" aria-hidden />
-        <p className="mt-3 text-base font-semibold text-foreground">
-          No laps yet
-        </p>
-        <p className="mt-1 text-sm leading-6 text-(--text-muted)">
-          Start the stopwatch and press Lap to record split times.
-        </p>
-      </div>
-    );
+    return <LapEmptyState />;
   }
 
   return (

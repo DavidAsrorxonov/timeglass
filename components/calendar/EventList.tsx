@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Pencil, Plus, Save, Trash2, X } from "lucide-react";
 import { useState } from "react";
+import { CalendarEmptyState } from "@/components/empty-states/CalendarEmptyState";
 import type { CalendarEvent } from "@/types";
 
 type EventListProps = {
@@ -145,17 +146,11 @@ export function EventList({
 
       {events.length === 0 && !isFormOpen ? (
         <motion.div
-          className="mt-6 rounded-lg border border-white/10 bg-white/[0.03] p-6 text-center"
           initial={reduceMotion ? false : { opacity: 0, y: 8 }}
           animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.22, ease: "easeOut" }}
         >
-          <p className="text-lg font-medium text-foreground">
-            Nothing scheduled
-          </p>
-          <p className="mt-2 text-sm leading-6 text-(--text-muted)">
-            Add your first event for this day.
-          </p>
+          <CalendarEmptyState />
         </motion.div>
       ) : (
         <motion.div layout className="mt-6 space-y-3">
