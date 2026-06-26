@@ -42,7 +42,7 @@ describe("Countdown flow", () => {
 
     act(() => {
       jest.setSystemTime(new Date("2026-06-26T07:00:01.000Z"));
-      jest.advanceTimersByTime(16);
+      jest.runOnlyPendingTimers();
     });
 
     expect(screen.getByText("Done")).toBeInTheDocument();

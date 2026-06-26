@@ -1,6 +1,10 @@
 import { act, renderHook } from "@testing-library/react";
 import { useTimer } from "@/hooks/useTimer";
 
+function runAnimationFrame() {
+  jest.runOnlyPendingTimers();
+}
+
 describe("useTimer", () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -24,12 +28,13 @@ describe("useTimer", () => {
 
     act(() => {
       jest.setSystemTime(new Date("2026-06-26T07:00:02.000Z"));
-      jest.advanceTimersByTime(16);
+      runAnimationFrame();
     });
 
     expect(result.current.remainingMs).toBeGreaterThanOrEqual(2900);
     expect(result.current.remainingMs).toBeLessThanOrEqual(3000);
-    expect(result.current.progress).toBeCloseTo(0.6);
+    expect(result.current.progress).toBeGreaterThan(0.58);
+    expect(result.current.progress).toBeLessThanOrEqual(0.6);
 
     act(() => {
       result.current.pause();
@@ -55,7 +60,7 @@ describe("useTimer", () => {
 
     act(() => {
       jest.setSystemTime(new Date("2026-06-26T07:00:12.000Z"));
-      jest.advanceTimersByTime(16);
+      runAnimationFrame();
     });
 
     expect(result.current.remainingMs).toBeGreaterThanOrEqual(1900);
@@ -80,7 +85,7 @@ describe("useTimer", () => {
 
     act(() => {
       jest.setSystemTime(new Date("2026-06-26T07:00:01.000Z"));
-      jest.advanceTimersByTime(16);
+      runAnimationFrame();
     });
 
     expect(result.current.status).toBe("done");

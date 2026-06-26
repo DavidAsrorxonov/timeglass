@@ -1,3 +1,5 @@
+"use client";
+
 type CircularProgressProps = {
   value: number;
   size?: number;
@@ -49,14 +51,14 @@ export function CircularProgress({
         r={radius}
         fill="none"
         stroke={color}
-        strokeDasharray={circumference}
-        strokeDashoffset={dashOffset}
         strokeLinecap="round"
         strokeWidth={strokeWidth}
         style={{
-          rotate: "-90deg",
+          strokeDasharray: circumference,
+          strokeDashoffset: dashOffset,
+          transform: "rotate(-90deg)",
           transformOrigin: "50% 50%",
-          transition: "stroke-dashoffset 0.25s linear",
+          willChange: "stroke-dashoffset",
         }}
       />
     </svg>
