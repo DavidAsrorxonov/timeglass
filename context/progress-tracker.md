@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 11 Polish & Final Details Complete
+**Current Stage:** Phase 12 Automated Testing Complete
 **Last Updated:** 2026-06-26  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -55,6 +55,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Phase 9 Local Calendar implemented | The Calendar tab now has a 42-cell monthly grid, month navigation, today and selected-day states, local event CRUD, event colors, event sorting, and LocalStorage persistence. | Completed |
 | 2026-06-25 | Phase 10 cross-cutting features implemented | Timeglass now has a notification permission banner, global 1-6 tab shortcuts, responsive tab refinements, reduced motion support, focus utilities, browser support helpers, PWA manifest/icons, and a production-only service worker registration. | Completed |
 | 2026-06-26 | Phase 11 polish and final details implemented | Timeglass now has polished tab transitions, reusable empty states, final metadata and favicon/app icon references, tab and App Router error fallbacks, broken LocalStorage cleanup, and final verification pass results. | Completed |
+| 2026-06-26 | Phase 12 automated testing implemented | Jest and Testing Library were added with Next.js 16 `next/jest`, browser API mocks, hook tests, component tests, integration flow tests, and a manual browser testing checklist. | Completed |
 
 ---
 
@@ -63,6 +64,7 @@ The goal is to keep a clear record of:
 | Item                     | Description                                                                                     | Current Status |
 | ------------------------ | ----------------------------------------------------------------------------------------------- | -------------- |
 | Planning documentation | Additional supporting documents can still be created as needed. | In Progress |
+| Manual browser verification | Real-browser checks from `context/testing-checklist.md` still need to be run locally, including notifications, audio, PWA, responsive, and Lighthouse accessibility checks. | Pending |
 
 ---
 
@@ -72,13 +74,14 @@ The goal is to keep a clear record of:
 
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
-| High     | Start Phase 12 testing             | Add unit tests, hook tests, LocalStorage tests, timer tests, alarm tests, calendar tests, and a manual testing checklist. | Not Started |
+| High     | Start Phase 12 testing             | Add unit tests, hook tests, LocalStorage tests, timer tests, alarm tests, calendar tests, and a manual testing checklist. | Completed |
 | High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine. The managed sandbox blocked binding to port 3000 and escalated startup was not approved here. | Blocked Here |
+| High     | Complete manual browser checklist  | Run the real-browser checks in `context/testing-checklist.md`, including notifications, audio alerts, PWA service worker behavior, responsive layouts, and Lighthouse accessibility. | Not Started |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
 | High     | Create `features.md`               | Document all six main modules: World Clock, Countdown, Stopwatch, Pomodoro, Alarm, and Calendar.          | Not Started |
 | Medium   | Create `build-roadmap.md`          | Convert the 12 phases into a practical coding order with milestones.                                      | Not Started |
-| Medium   | Create `testing-checklist.md`      | Prepare a testing checklist for hooks, UI behavior, LocalStorage, notifications, and responsiveness.      | Not Started |
+| Medium   | Create `testing-checklist.md`      | Prepare a testing checklist for hooks, UI behavior, LocalStorage, notifications, and responsiveness.      | Completed |
 
 ---
 
@@ -106,13 +109,40 @@ The goal is to keep a clear record of:
 | PWA Support            | Yes     | No          | Yes       | App manifest, Timeglass favicon/app icons, basic app-shell service worker, and production-only registration implemented |
 | Polish & Final Details | Yes     | No          | Yes       | Final metadata, favicon, empty states, tab transitions, error fallbacks, LocalStorage cleanup, and verification pass implemented |
 | Error Boundaries       | Yes     | No          | Yes       | Tab-level error boundary plus App Router `error.tsx` and `not-found.tsx` fallbacks implemented |
-| Testing                | Yes     | No          | No        | Unit and integration tests planned                   |
+| Testing                | Yes     | Yes         | No        | Jest setup, browser API mocks, hook/component/integration tests, and `context/testing-checklist.md` are implemented; real-browser manual checks remain |
 
 ---
 
 ## Change Log
 
 ### 2026-06-26
+
+#### Phase 12 Added
+
+- Installed Jest, `jest-environment-jsdom`, `ts-node`, `@types/jest`, and Testing Library packages.
+- Added `jest.config.ts` using Next.js 16 `next/jest` with `jsdom`, path alias mapping, setup file loading, V8 coverage, and Watchman disabled for sandbox-safe runs.
+- Added `jest.setup.ts` with `@testing-library/jest-dom`, Framer Motion test shims, and mocks for notifications, clipboard, Web Audio API, `requestAnimationFrame`, and `cancelAnimationFrame`.
+- Added hook tests for `useLocalStorage`, `useTimer`, `useStopwatch`, `usePomodoro`, `useAlarms`, and `useCalendar`.
+- Added component tests for countdown, stopwatch laps, Pomodoro ring, alarm ringing overlay, and calendar month grid behavior.
+- Added integration flow tests for Countdown, Alarm, and Calendar user workflows.
+- Added `context/testing-checklist.md` for real-browser manual checks covering World Clock, notifications, audio, PWA, responsive layout, accessibility, and browser limitation wording.
+
+#### Phase 12 Changed
+
+- Added `test`, `test:watch`, and `test:coverage` scripts to `package.json`.
+- Updated `useStopwatch` so best/worst lap indexes remain `null` until at least two laps exist, matching the no-single-lap-highlight behavior.
+
+#### Phase 12 Verified
+
+- Phase 12 test suite passed with `npm run test` (`14` suites, `25` tests).
+- Phase 12 verification passed with `npx tsc --noEmit`.
+- Phase 12 verification passed with `npm run lint`.
+- Phase 12 production build passed with `npm run build` after network-enabled execution allowed `next/font/google` to fetch Google Fonts.
+
+#### Phase 12 Not Verified Here
+
+- Manual browser checks in `context/testing-checklist.md` were not run in this managed sandbox.
+- `npm run dev` browser runtime verification is still left for local execution because this environment previously blocked binding to port 3000.
 
 #### Added
 
@@ -330,21 +360,20 @@ These questions should be answered before or during development:
 
 ## Current Project Phase
 
-The project has completed **Phase 11 — Polish & Final Details**.
+The project has completed **Phase 12 automated testing implementation**.
 
-The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, polished animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, a complete World Clock tab, a complete Countdown Timer tab, a complete Stopwatch tab, a complete Pomodoro tab, a complete Alarm tab, a complete Local Calendar tab, app-wide cross-cutting features, and final polish/error handling details.
+The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, polished animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, complete World Clock, Countdown Timer, Stopwatch, Pomodoro, Alarm, and Local Calendar tabs, app-wide cross-cutting features, final polish/error handling details, and an automated Jest test harness.
 
-Phase 11 added:
+Phase 12 added:
 
-1. Reusable empty states for list-based features
-2. Tab-level error boundary recovery
-3. App Router error and not-found fallbacks
-4. Final metadata, icon, and favicon polish
-5. Broken LocalStorage value cleanup
-6. Reduced-motion-aware tab transition polish
-7. Final typecheck, lint, and production build verification
+1. Next.js 16 Jest configuration with browser API mocks
+2. Hook tests for storage, timers, stopwatch, Pomodoro, alarms, and calendar behavior
+3. Component tests for core visual states
+4. Integration tests for Countdown, Alarm, and Calendar flows
+5. Manual browser verification checklist
+6. Final typecheck, lint, test, and production build verification
 
-The next recommended implementation step is **Phase 12 — Testing**.
+The remaining recommended verification step is to run the manual browser checklist in `context/testing-checklist.md` locally.
 
 ---
 
@@ -385,6 +414,6 @@ Use this format for new change log entries:
 
 ## Short Status
 
-**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, Phase 3 layout/navigation, Phase 4 world clock, Phase 5 countdown timer, Phase 6 stopwatch, Phase 7 Pomodoro, Phase 8 alarm system, Phase 9 local calendar, Phase 10 cross-cutting features, and Phase 11 polish/final details
-**In Progress:** Planning documentation  
-**Next:** Run `npm run dev` locally, then begin Phase 12 testing
+**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, Phase 3 layout/navigation, Phase 4 world clock, Phase 5 countdown timer, Phase 6 stopwatch, Phase 7 Pomodoro, Phase 8 alarm system, Phase 9 local calendar, Phase 10 cross-cutting features, Phase 11 polish/final details, and Phase 12 automated testing implementation
+**In Progress:** Planning documentation and manual browser verification  
+**Next:** Run `npm run dev` locally, then complete `context/testing-checklist.md`

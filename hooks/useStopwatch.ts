@@ -101,7 +101,7 @@ export function useStopwatch() {
   }, [clearFrame]);
 
   const bestLapIndex = useMemo(() => {
-    if (laps.length === 0) {
+    if (laps.length < 2) {
       return null;
     }
 
@@ -111,7 +111,7 @@ export function useStopwatch() {
   }, [laps]);
 
   const worstLapIndex = useMemo(() => {
-    if (laps.length === 0) {
+    if (laps.length < 2) {
       return null;
     }
 
