@@ -61,7 +61,7 @@ export function CountdownRing({
       </motion.div>
 
       <div className="relative z-10 flex flex-col items-center justify-center text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.35em] text-(--text-muted)">
+        <p className="font-mono text-xs uppercase tracking-[0.35em] text-muted-foreground">
           {STATUS_LABELS[status]}
         </p>
 
@@ -70,7 +70,7 @@ export function CountdownRing({
         </p>
 
         {isDanger && (
-          <p className="mt-3 text-sm font-medium text-(--accent-danger)">
+          <p className="mt-3 text-sm font-medium text-destructive">
             Almost finished
           </p>
         )}

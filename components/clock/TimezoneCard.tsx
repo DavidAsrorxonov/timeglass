@@ -45,7 +45,7 @@ export function TimezoneCard({
           <h3 className="truncate text-lg font-semibold text-foreground">
             {timezone.city}
           </h3>
-          <p className="truncate text-sm text-(--text-muted)">
+          <p className="truncate text-sm text-muted-foreground">
             {timezone.region}
           </p>
         </div>
@@ -56,7 +56,7 @@ export function TimezoneCard({
             onClick={() => onTogglePin(timezone.id)}
             aria-label={timezone.pinned ? "Unpin timezone" : "Pin timezone"}
             title={timezone.pinned ? "Unpin timezone" : "Pin timezone"}
-            className="focus-ring rounded-lg p-2 text-(--text-muted) transition hover:bg-white/8 hover:text-(--accent-glow)"
+            className="focus-ring rounded-lg p-2 text-muted-foreground transition hover:bg-accent hover:text-foreground"
           >
             {timezone.pinned ? (
               <Pin className="size-4" aria-hidden="true" />
@@ -70,7 +70,7 @@ export function TimezoneCard({
             onClick={() => onRemove(timezone.id)}
             aria-label={`Remove ${timezone.city}`}
             title={`Remove ${timezone.city}`}
-            className="focus-ring rounded-lg p-2 text-(--text-muted) transition hover:bg-white/8 hover:text-(--accent-danger)"
+            className="focus-ring rounded-lg p-2 text-muted-foreground transition hover:bg-accent hover:text-destructive"
           >
             <X className="size-4" aria-hidden="true" />
           </button>
@@ -82,7 +82,7 @@ export function TimezoneCard({
           <p className="font-mono text-3xl font-semibold tracking-normal text-foreground">
             {timeLabel}
           </p>
-          <p className="mt-1 text-sm text-(--text-muted)">
+          <p className="mt-1 text-sm text-muted-foreground">
             UTC {timezone.offset}
           </p>
         </div>

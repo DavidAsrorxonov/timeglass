@@ -103,7 +103,7 @@ export function ClockTab() {
             <h2 className="text-xl font-semibold text-foreground">
               Saved Timezones
             </h2>
-            <p className="text-sm text-(--text-muted)">
+            <p className="text-sm text-muted-foreground">
               {reachedLimit
                 ? "Maximum 8 timezones"
                 : "Add up to 8 cities and pin your important ones."}
@@ -114,7 +114,7 @@ export function ClockTab() {
             type="button"
             onClick={() => setIsSearchOpen(true)}
             disabled={reachedLimit}
-            className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
+            className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 text-sm text-foreground transition hover:border-foreground disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Plus className="size-4" aria-hidden="true" />
             Add

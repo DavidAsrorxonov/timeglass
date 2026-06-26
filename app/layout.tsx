@@ -1,20 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Bebas_Neue, Inter, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { ServiceWorkerRegister } from "@/components/pwa/ServiceWorkerRegister";
 import "./globals.css";
 
-const bebasNeue = Bebas_Neue({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-display",
-});
-
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
   variable: "--font-body",
 });
 
-const jetBrainsMono = JetBrains_Mono({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 });
@@ -60,7 +54,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a14",
+  themeColor: "#fcfcfc",
 };
 
 export default function RootLayout({
@@ -71,7 +65,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${bebasNeue.variable} ${inter.variable} ${jetBrainsMono.variable}`}
+        className={`${geist.variable} ${geistMono.variable}`}
       >
         {children}
         <ServiceWorkerRegister />

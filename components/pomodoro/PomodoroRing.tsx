@@ -72,7 +72,7 @@ export function PomodoroRing({
       </motion.div>
 
       <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.28em] text-(--text-muted)">
+        <p className="font-mono text-xs uppercase tracking-[0.28em] text-muted-foreground">
           {label}
         </p>
 
@@ -80,7 +80,7 @@ export function PomodoroRing({
           {formatDuration(remainingMs)}
         </p>
 
-        <p className="mt-3 text-sm text-(--text-muted)">{helperText}</p>
+        <p className="mt-3 text-sm text-muted-foreground">{helperText}</p>
       </div>
     </div>
   );

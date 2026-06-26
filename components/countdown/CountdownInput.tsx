@@ -42,7 +42,7 @@ export function CountdownInput({
     <div className="grid grid-cols-3 gap-3">
       {TIME_FIELDS.map((field) => (
         <label key={field.key} className="block">
-          <span className="mb-2 block text-center text-xs uppercase tracking-[0.25em] text-(--text-muted)">
+          <span className="mb-2 block text-center text-xs uppercase tracking-[0.25em] text-muted-foreground">
             {field.label}
           </span>
           <input
@@ -55,7 +55,7 @@ export function CountdownInput({
             disabled={disabled}
             aria-label={field.label}
             onChange={(event) => updateValue(field.key, event.target.value)}
-            className="focus-ring glass-panel min-h-16 w-full px-2 py-3 text-center font-mono text-2xl text-foreground transition [appearance:textfield] focus:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-50 sm:text-3xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+            className="focus-ring min-h-16 w-full rounded-md border border-input bg-background px-2 py-3 text-center font-mono text-2xl text-foreground shadow-sm outline-none transition [appearance:textfield] focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 sm:text-3xl [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             placeholder={field.shortLabel}
           />
         </label>

@@ -43,24 +43,14 @@ export function AnalogClock({
       viewBox="0 0 260 260"
       role="img"
       aria-label="Analog clock"
-      className={compact ? "drop-shadow-lg" : "drop-shadow-2xl"}
+      className="text-foreground"
     >
-      <defs>
-        <filter id={`second-hand-glow-${compact ? "compact" : "main"}`}>
-          <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-          <feMerge>
-            <feMergeNode in="coloredBlur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
       <circle
         cx="130"
         cy="130"
         r="118"
-        fill="rgba(255,255,255,0.06)"
-        stroke="rgba(255,255,255,0.14)"
+        fill="var(--card)"
+        stroke="var(--border)"
         strokeWidth="1"
       />
 
@@ -71,7 +61,7 @@ export function AnalogClock({
           y1="22"
           x2="130"
           y2={22 + tick.length}
-          stroke="rgba(241,245,249,0.85)"
+          stroke="var(--muted-foreground)"
           strokeWidth={tick.strokeWidth}
           opacity={tick.opacity}
           transform={`rotate(${tick.angle} 130 130)`}
@@ -85,7 +75,7 @@ export function AnalogClock({
           y1="130"
           x2="130"
           y2="80"
-          stroke="rgba(241,245,249,0.95)"
+          stroke="var(--foreground)"
           strokeWidth={compact ? 8 : 9}
           strokeLinecap="round"
         />
@@ -97,7 +87,8 @@ export function AnalogClock({
           y1="130"
           x2="130"
           y2="48"
-          stroke="rgba(241,245,249,0.82)"
+          stroke="var(--foreground)"
+          opacity="0.82"
           strokeWidth={compact ? 5 : 6}
           strokeLinecap="round"
         />
@@ -109,21 +100,20 @@ export function AnalogClock({
           y1="146"
           x2="130"
           y2="34"
-          stroke="var(--accent-primary)"
+          stroke="var(--primary)"
           strokeWidth={compact ? 2.5 : 3}
           strokeLinecap="round"
-          filter={`url(#second-hand-glow-${compact ? "compact" : "main"})`}
         />
         <circle
           cx="130"
           cy="34"
           r={compact ? 3 : 4}
-          fill="var(--accent-glow)"
+          fill="var(--primary)"
         />
       </g>
 
-      <circle cx="130" cy="130" r="7" fill="var(--accent-primary)" />
-      <circle cx="130" cy="130" r="3" fill="white" opacity="0.9" />
+      <circle cx="130" cy="130" r="7" fill="var(--primary)" />
+      <circle cx="130" cy="130" r="3" fill="var(--primary-foreground)" />
     </svg>
   );
 }

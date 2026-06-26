@@ -59,7 +59,7 @@ export function CalendarTab() {
     <GlassPanel className="p-5 sm:p-6 lg:p-8" glow>
       <div className="mb-7 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.32em] text-(--accent-glow)">
+          <p className="font-mono text-xs uppercase tracking-[0.32em] text-muted-foreground">
             Calendar
           </p>
 
@@ -67,7 +67,7 @@ export function CalendarTab() {
             Plan your local schedule.
           </h2>
 
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-(--text-muted)">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
             Add simple browser-saved events. This calendar stays local to this
             device.
           </p>

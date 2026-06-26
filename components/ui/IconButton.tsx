@@ -14,7 +14,7 @@ export function IconButton({
   return (
     <button
       type="button"
-      className={`focus-ring inline-flex size-10 items-center justify-center rounded-lg border border-white/10 bg-white/8 text-slate-100 transition hover:bg-white/12 ${className}`}
+      className={`focus-ring inline-flex size-10 items-center justify-center rounded-lg border border-border bg-background text-foreground shadow-sm transition hover:bg-accent ${className}`}
       aria-label={label}
       title={label}
       {...props}

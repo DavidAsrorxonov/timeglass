@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 type GlassPanelProps = {
@@ -16,15 +16,13 @@ export function GlassPanel({
   hover = false,
   glow = false,
 }: GlassPanelProps) {
-  const reduceMotion = useReducedMotion();
+  void glow;
 
   return (
     <motion.div
-      className={`glass-panel ${className}`}
-      initial={glow && !reduceMotion ? { opacity: 0, scale: 0.98 } : false}
-      animate={glow && !reduceMotion ? { opacity: 1, scale: 1 } : undefined}
-      whileHover={hover && !reduceMotion ? { y: -2 } : undefined}
-      transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}
+      className={`rounded-lg border border-border bg-card text-card-foreground shadow-sm ${className}`}
+      whileHover={hover ? { y: -1 } : undefined}
+      transition={{ duration: 0.18, ease: "easeOut" }}
     >
       {children}
     </motion.div>

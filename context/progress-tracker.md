@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 12 Automated Testing Complete
+**Current Stage:** Phase 13 Theme Change Complete
 **Last Updated:** 2026-06-26  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -56,6 +56,7 @@ The goal is to keep a clear record of:
 | 2026-06-25 | Phase 10 cross-cutting features implemented | Timeglass now has a notification permission banner, global 1-6 tab shortcuts, responsive tab refinements, reduced motion support, focus utilities, browser support helpers, PWA manifest/icons, and a production-only service worker registration. | Completed |
 | 2026-06-26 | Phase 11 polish and final details implemented | Timeglass now has polished tab transitions, reusable empty states, final metadata and favicon/app icon references, tab and App Router error fallbacks, broken LocalStorage cleanup, and final verification pass results. | Completed |
 | 2026-06-26 | Phase 12 automated testing implemented | Jest and Testing Library were added with Next.js 16 `next/jest`, browser API mocks, hook tests, component tests, integration flow tests, and a manual browser testing checklist. | Completed |
+| 2026-06-26 | Phase 13 Vercel-style theme implemented | Timeglass was migrated from purple glassmorphism to a minimal neutral OKLCH theme with Geist fonts, simple cards, segmented navigation, neutral inputs, simplified progress rings, and reduced glow/background effects. | Completed |
 
 ---
 
@@ -75,6 +76,7 @@ The goal is to keep a clear record of:
 | Priority | Task                               | Description                                                                                               | Status      |
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
 | High     | Start Phase 12 testing             | Add unit tests, hook tests, LocalStorage tests, timer tests, alarm tests, calendar tests, and a manual testing checklist. | Completed |
+| High     | Complete Phase 13 theme change     | Replace the purple/glass visual direction with a minimal Vercel-inspired neutral theme without changing app logic. | Completed |
 | High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine. The managed sandbox blocked binding to port 3000 and escalated startup was not approved here. | Blocked Here |
 | High     | Complete manual browser checklist  | Run the real-browser checks in `context/testing-checklist.md`, including notifications, audio alerts, PWA service worker behavior, responsive layouts, and Lighthouse accessibility. | Not Started |
 | High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
@@ -91,7 +93,8 @@ The goal is to keep a clear record of:
 | ---------------------- | ------- | ----------- | --------- | ---------------------------------------------------- |
 | Project Overview       | Yes     | No          | Yes       | `project-overview.md` created                        |
 | Progress Tracking      | Yes     | No          | Yes       | `progress-tracker.md` created                        |
-| Design System          | Yes     | Yes         | No        | Base CSS variables and glass utility added; separate documentation still needed |
+| Design System          | Yes     | Yes         | No        | Neutral OKLCH theme variables, Geist font setup, minimal card/input/button patterns, and compatibility variables added; separate documentation still needed |
+| Theme Change           | Yes     | No          | Yes       | Phase 13 Vercel-inspired neutral theme migration implemented across shared UI and feature components |
 | Technical Architecture | Yes     | No          | No        | Needs separate documentation                         |
 | App Scaffold           | Yes     | No          | Yes       | Next.js 16, TypeScript, Tailwind v4, ESLint, dependencies, folders, fonts, and base shell prepared |
 | Layout & Navigation    | Yes     | No          | Yes       | Six-tab AppShell, TabBar, GlowBackground, GlassPanel, NotificationBadge, tab transitions, and active-tab persistence implemented |
@@ -116,6 +119,30 @@ The goal is to keep a clear record of:
 ## Change Log
 
 ### 2026-06-26
+
+#### Phase 13 Changed
+
+- Replaced the purple/glass global theme with the tweakcn OKLCH neutral palette, dark-mode variables, Tailwind v4 `@theme inline` mappings, compatibility variables, and subtle shadow/radius tokens.
+- Switched the app font setup from Bebas Neue, Inter, and JetBrains Mono to Geist and Geist Mono via `next/font/google`.
+- Simplified `GlassPanel` into a minimal card surface while preserving its existing API for imports and compatibility.
+- Replaced the animated purple `GlowBackground` with a static background layer.
+- Updated `AppShell` header copy and spacing to a cleaner product-style layout.
+- Reworked `TabBar` into a segmented control with primary active state and no glowing underline.
+- Removed neon progress-ring filters and changed ring colors to `primary`, `destructive`, and `chart-1`.
+- Cleaned the analog clock to use `card`, `border`, `foreground`, `muted-foreground`, and `primary` variables without glow filters.
+- Migrated feature tabs, cards, modals, inputs, buttons, empty states, notification banner, error fallbacks, and calendar controls to neutral Tailwind tokens such as `bg-card`, `border-border`, `text-muted-foreground`, `bg-primary`, and `bg-destructive`.
+
+#### Phase 13 Verified
+
+- Phase 13 verification passed with `npx tsc --noEmit`.
+- Phase 13 verification passed with `npm run lint`.
+- Phase 13 test suite passed with `npm run test` (`14` suites, `25` tests).
+- Phase 13 production build passed with `npm run build` after network-enabled execution allowed `next/font/google` to fetch Geist fonts.
+
+#### Phase 13 Not Verified Here
+
+- Manual browser checks in `context/testing-checklist.md` were not run in this managed sandbox.
+- `npm run dev` browser runtime verification is still left for local execution because this environment previously blocked binding to port 3000.
 
 #### Phase 12 Added
 

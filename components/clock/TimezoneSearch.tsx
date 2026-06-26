@@ -61,7 +61,7 @@ export function TimezoneSearch({
               <h2 className="text-xl font-semibold text-foreground">
                 Add Timezone
               </h2>
-              <p className="mt-1 text-sm text-(--text-muted)">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Search by city, country, or timezone name.
               </p>
             </div>
@@ -69,7 +69,7 @@ export function TimezoneSearch({
             <button
               type="button"
               onClick={onClose}
-              className="focus-ring rounded-lg p-2 text-(--text-muted) transition hover:bg-white/8 hover:text-white"
+              className="focus-ring rounded-lg p-2 text-muted-foreground transition hover:bg-accent hover:text-foreground"
               aria-label="Close timezone search"
               title="Close timezone search"
             >
@@ -77,14 +77,14 @@ export function TimezoneSearch({
             </button>
           </div>
 
-          <label className="mt-5 flex items-center gap-3 rounded-lg border border-white/10 bg-white/5 px-4 py-3">
+          <label className="mt-5 flex items-center gap-3 rounded-lg border border-border bg-muted px-4 py-3">
             <span className="sr-only">Search timezones</span>
-            <Search className="size-5 text-(--text-muted)" aria-hidden="true" />
+            <Search className="size-5 text-muted-foreground" aria-hidden="true" />
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search Tokyo, Tashkent, London..."
-              className="focus-ring w-full rounded-lg bg-transparent text-sm text-foreground placeholder:text-(--text-muted)"
+              className="focus-ring w-full rounded-lg bg-transparent text-sm text-foreground placeholder:text-muted-foreground"
               autoFocus
             />
           </label>
@@ -99,18 +99,18 @@ export function TimezoneSearch({
                   type="button"
                   disabled={alreadyAdded}
                   onClick={() => onAdd({ ...timezone, pinned: false })}
-                  className="focus-ring flex w-full items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-left transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
+                  className="focus-ring flex w-full items-center justify-between gap-4 rounded-lg border border-border bg-muted px-4 py-3 text-left transition hover:border-foreground disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <span className="min-w-0">
                     <span className="block truncate font-medium text-foreground">
                       {timezone.city}
                     </span>
-                    <span className="block truncate text-sm text-(--text-muted)">
+                    <span className="block truncate text-sm text-muted-foreground">
                       {timezone.region} / {timezone.timezone}
                     </span>
                   </span>
 
-                  <span className="shrink-0 text-sm text-(--text-muted)">
+                  <span className="shrink-0 text-sm text-muted-foreground">
                     {alreadyAdded ? "Added" : `UTC ${timezone.offset}`}
                   </span>
                 </button>
@@ -118,7 +118,7 @@ export function TimezoneSearch({
             })}
 
             {results.length === 0 && (
-              <p className="rounded-lg border border-white/10 bg-white/5 px-4 py-6 text-center text-sm text-(--text-muted)">
+              <p className="rounded-lg border border-border bg-muted px-4 py-6 text-center text-sm text-muted-foreground">
                 No timezone matches found.
               </p>
             )}

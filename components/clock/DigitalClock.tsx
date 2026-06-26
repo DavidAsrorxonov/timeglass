@@ -87,7 +87,7 @@ export function DigitalClock({
 
   return (
     <div className="flex min-w-0 flex-col items-start justify-center">
-      <p className="font-mono text-xs uppercase tracking-[0.32em] text-(--accent-glow)">
+      <p className="font-mono text-xs uppercase tracking-[0.32em] text-muted-foreground">
         Local Time
       </p>
 
@@ -101,25 +101,25 @@ export function DigitalClock({
         </p>
 
         {!is24Hour && (
-          <span className="mb-2 text-lg font-medium text-(--text-muted)">
+          <span className="mb-2 text-lg font-medium text-muted-foreground">
             {time.period}
           </span>
         )}
       </div>
 
-      <p className="mt-3 text-sm text-(--text-muted) sm:text-base">
+      <p className="mt-3 text-sm text-muted-foreground sm:text-base">
         {dateLabel}
       </p>
 
-      <p className="mt-2 inline-flex items-center gap-2 text-sm text-(--text-muted)">
-        <Clock3 className="size-4 text-(--accent-glow)" aria-hidden="true" />
+      <p className="mt-2 inline-flex items-center gap-2 text-sm text-muted-foreground">
+        <Clock3 className="size-4 text-muted-foreground" aria-hidden="true" />
         Local timezone: {localTimezone}
       </p>
 
       <button
         type="button"
         onClick={onToggleFormat}
-        className="focus-ring mt-5 min-h-11 rounded-lg border border-white/10 px-4 py-2 text-sm text-foreground transition hover:border-(--accent-primary) hover:text-white"
+        className="focus-ring mt-5 min-h-11 rounded-lg border border-border bg-background px-4 py-2 text-sm text-foreground shadow-sm transition hover:bg-accent"
       >
         Switch to {is24Hour ? "12-hour" : "24-hour"} format
       </button>

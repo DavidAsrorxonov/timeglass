@@ -53,11 +53,11 @@ export function AlarmRingingOverlay({
           transition={{ duration: reduceMotion ? 0 : 0.24, ease: "easeOut" }}
         >
           <BellRing
-            className="mx-auto size-10 text-(--accent-danger)"
+            className="mx-auto size-10 text-destructive"
             aria-hidden="true"
           />
 
-          <p className="mt-5 font-mono text-xs uppercase tracking-[0.35em] text-(--accent-danger)">
+          <p className="mt-5 font-mono text-xs uppercase tracking-[0.35em] text-destructive">
             Alarm Ringing
           </p>
 
@@ -76,7 +76,7 @@ export function AlarmRingingOverlay({
             <button
               type="button"
               onClick={() => onSnooze(alarm.id)}
-              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-lg border border-white/10 px-6 py-3 font-medium text-foreground transition hover:border-(--accent-primary)"
+              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-lg border border-border px-6 py-3 font-medium text-foreground transition hover:border-foreground"
             >
               Snooze 5 min
             </button>
@@ -84,7 +84,7 @@ export function AlarmRingingOverlay({
             <button
               type="button"
               onClick={onDismiss}
-              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-lg bg-(--accent-danger) px-6 py-3 font-medium text-white transition hover:opacity-90"
+              className="focus-ring inline-flex min-h-12 items-center justify-center rounded-lg bg-destructive px-6 py-3 font-medium text-destructive-foreground transition hover:opacity-90"
             >
               Dismiss
             </button>
@@ -145,7 +145,7 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
     <GlassPanel className="p-5 sm:p-6 lg:p-8" glow>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.32em] text-(--accent-glow)">
+          <p className="font-mono text-xs uppercase tracking-[0.32em] text-muted-foreground">
             Alarms
           </p>
 
@@ -153,7 +153,7 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
             Wake up, focus, or remember.
           </h2>
 
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-(--text-muted)">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
             Create local browser-based alarms. {BROWSER_TIMER_LIMITATION}{" "}
             {PWA_ALARM_LIMITATION}
           </p>
@@ -163,24 +163,24 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
           type="button"
           onClick={openCreateModal}
           disabled={!canCreateAlarm}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-5 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow) disabled:cursor-not-allowed disabled:opacity-40"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Plus className="size-4" aria-hidden="true" />
           New Alarm
         </button>
       </div>
 
-      <div className="mt-6 flex flex-col gap-3 rounded-lg border border-white/10 bg-white/3 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-6 flex flex-col gap-3 rounded-lg border border-border bg-muted p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
           <ShieldCheck
-            className="mt-0.5 size-5 shrink-0 text-(--accent-success)"
+            className="mt-0.5 size-5 shrink-0 text-chart-1"
             aria-hidden="true"
           />
           <div>
             <p className="text-sm font-medium text-foreground">
               Browser notifications
             </p>
-            <p className="mt-1 text-sm text-(--text-muted)">
+            <p className="mt-1 text-sm text-muted-foreground">
               {notifications.canNotify
                 ? "Notifications are enabled for ringing alarms."
                 : notifications.isSupported
@@ -194,7 +194,7 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
           <button
             type="button"
             onClick={() => void notifications.requestPermission()}
-            className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary)"
+            className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-foreground"
           >
             Enable
           </button>
@@ -202,7 +202,7 @@ export function AlarmTab({ alarmController }: AlarmTabProps) {
       </div>
 
       {!canCreateAlarm && (
-        <p className="mt-4 text-sm text-(--text-muted)">
+        <p className="mt-4 text-sm text-muted-foreground">
           Alarm limit reached. Delete an alarm before creating another one.
         </p>
       )}

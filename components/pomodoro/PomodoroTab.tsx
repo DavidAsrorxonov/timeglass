@@ -122,13 +122,13 @@ export function PomodoroTab() {
   return (
     <GlassPanel className="p-5 sm:p-6 lg:p-8" glow>
       <div className="mb-7 text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.32em] text-(--accent-glow)">
+        <p className="font-mono text-xs uppercase tracking-[0.32em] text-muted-foreground">
           Pomodoro
         </p>
         <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">
           Focus deeply, then rest.
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-(--text-muted)">
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
           {BROWSER_TIMER_LIMITATION}
         </p>
       </div>
@@ -144,7 +144,7 @@ export function PomodoroTab() {
         <button
           type="button"
           onClick={handlePrimaryAction}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
         >
           {isRunning ? (
             <Pause className="size-4" aria-hidden="true" />
@@ -158,7 +158,7 @@ export function PomodoroTab() {
           type="button"
           onClick={handleSkip}
           disabled={isIdle}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:border-foreground disabled:cursor-not-allowed disabled:opacity-40"
         >
           <SkipForward className="size-4" aria-hidden="true" />
           Skip
@@ -167,7 +167,7 @@ export function PomodoroTab() {
         <button
           type="button"
           onClick={handleReset}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-danger)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:border-destructive"
         >
           <RotateCcw className="size-4" aria-hidden="true" />
           Reset
@@ -187,8 +187,8 @@ export function PomodoroTab() {
                 key={index}
                 className={`size-3 rounded-full border transition ${
                   completed
-                    ? "border-(--accent-danger) bg-(--accent-danger) shadow-[0_0_14px_rgba(248,113,113,0.45)]"
-                    : "border-white/20 bg-white/5"
+                    ? "border-primary bg-primary shadow-sm"
+                    : "border-border bg-muted"
                 }`}
                 aria-hidden="true"
               />
@@ -196,7 +196,7 @@ export function PomodoroTab() {
           })}
         </div>
 
-        <p className="mt-3 text-sm text-(--text-muted)">
+        <p className="mt-3 text-sm text-muted-foreground">
           Session {sessionLabel} of 4
         </p>
       </div>
@@ -205,9 +205,9 @@ export function PomodoroTab() {
         {STAT_ITEMS.map((item) => (
           <div
             key={item.key}
-            className="rounded-lg border border-white/10 px-4 py-4 text-center"
+            className="rounded-lg border border-border px-4 py-4 text-center"
           >
-            <p className="text-sm text-(--text-muted)">{item.label}</p>
+            <p className="text-sm text-muted-foreground">{item.label}</p>
             <p className="mt-2 text-2xl font-semibold text-foreground">
               {pomodoro.stats[item.key]}
             </p>

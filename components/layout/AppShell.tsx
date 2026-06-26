@@ -108,18 +108,16 @@ export function AppShell() {
 
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
         <header className="mx-auto w-full max-w-5xl">
-          <div className="mb-5 text-center">
-            <p className="font-mono text-sm uppercase tracking-[0.32em] text-(--accent-glow)">
-              Timeglass
-            </p>
+          <div className="mb-6">
+            <p className="text-sm font-medium text-muted-foreground">Timeglass</p>
 
-            <h1 className="font-display mt-3 text-5xl leading-none tracking-normal text-foreground sm:text-6xl">
-              Time, beautifully organized.
+            <h1 className="mt-2 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+              Time, organized simply.
             </h1>
 
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-(--text-muted) sm:text-base">
-              A modern clock, timer, stopwatch, Pomodoro, alarm, and calendar
-              app.
+            <p className="mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">
+              Clock, timer, stopwatch, Pomodoro, alarms, and calendar in one
+              focused workspace.
             </p>
           </div>
 
@@ -129,7 +127,7 @@ export function AppShell() {
             hasEnabledAlarm={alarmController.hasEnabledAlarm}
           />
 
-          <p className="mt-3 text-center text-xs text-(--text-muted)">
+          <p className="mt-3 text-xs text-muted-foreground">
             {TAB_SHORTCUT_HINT}
           </p>
         </header>

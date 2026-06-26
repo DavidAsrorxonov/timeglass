@@ -17,13 +17,13 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className={`glass-panel p-6 text-center sm:p-8 ${className}`}>
-      <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-white/[0.04] text-(--text-muted)">
+      <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
         {icon}
       </div>
 
       <p className="mt-4 text-lg font-medium text-foreground">{title}</p>
 
-      <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-(--text-muted)">
+      <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
         {description}
       </p>
 

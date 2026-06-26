@@ -93,7 +93,7 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
               <h2 className="text-2xl font-semibold text-foreground">
                 {isEditing ? "Edit Alarm" : "New Alarm"}
               </h2>
-              <p className="mt-1 text-sm text-(--text-muted)">
+              <p className="mt-1 text-sm text-muted-foreground">
                 {BROWSER_TIMER_LIMITATION}
               </p>
             </div>
@@ -101,7 +101,7 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
             <button
               type="button"
               onClick={handleClose}
-              className="focus-ring inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-danger) hover:text-foreground"
+              className="focus-ring inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-border text-muted-foreground transition hover:border-destructive hover:text-foreground"
               aria-label="Close alarm modal"
             >
               <X className="size-5" aria-hidden="true" />
@@ -110,7 +110,7 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
 
           <div className="mt-6 space-y-5">
             <label className="block">
-              <span className="mb-2 block text-sm text-(--text-muted)">
+              <span className="mb-2 block text-sm text-muted-foreground">
                 Time
               </span>
               <input
@@ -121,12 +121,12 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                   setTime(event.target.value);
                 }}
                 required
-                className="focus-ring glass-panel w-full px-4 py-4 font-mono text-3xl text-foreground focus:border-(--accent-primary)"
+                className="focus-ring w-full rounded-md border border-input bg-background px-4 py-4 font-mono text-3xl text-foreground shadow-sm outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
               />
             </label>
 
             <label className="block">
-              <span className="mb-2 block text-sm text-(--text-muted)">
+              <span className="mb-2 block text-sm text-muted-foreground">
                 Label
               </span>
               <input
@@ -135,12 +135,12 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                 onChange={(event) => setLabel(event.target.value)}
                 placeholder="Morning run"
                 maxLength={48}
-                className="focus-ring glass-panel w-full px-4 py-3 text-foreground placeholder:text-(--text-muted) focus:border-(--accent-primary)"
+                className="focus-ring w-full rounded-md border border-input bg-background px-4 py-3 text-foreground shadow-sm outline-none transition placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
               />
             </label>
 
             <div>
-              <p className="mb-2 text-sm text-(--text-muted)">Repeat days</p>
+              <p className="mb-2 text-sm text-muted-foreground">Repeat days</p>
               <div className="flex flex-wrap gap-2">
                 {DAYS_OF_WEEK.map((day) => {
                   const active = days.includes(day);
@@ -153,8 +153,8 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                       aria-pressed={active}
                       className={`focus-ring min-h-11 rounded-lg border px-3.5 py-2 text-sm font-medium transition ${
                         active
-                          ? "border-(--accent-primary) bg-(--accent-primary)/25 text-white"
-                          : "border-white/10 text-(--text-muted) hover:text-foreground"
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       {day}
@@ -162,13 +162,13 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                   );
                 })}
               </div>
-              <p className="mt-2 text-xs text-(--text-muted)">
+              <p className="mt-2 text-xs text-muted-foreground">
                 Leave all days unselected to repeat every day.
               </p>
             </div>
 
             <div>
-              <p className="mb-2 text-sm text-(--text-muted)">Alarm sound</p>
+              <p className="mb-2 text-sm text-muted-foreground">Alarm sound</p>
               <div className="grid gap-2 sm:grid-cols-2">
                 {ALARM_SOUNDS.map((item) => {
                   const active = sound === item.value;
@@ -181,15 +181,15 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
                       aria-pressed={active}
                       className={`focus-ring rounded-lg border px-4 py-3 text-left transition ${
                         active
-                          ? "border-(--accent-primary) bg-(--accent-primary)/20"
-                          : "border-white/10 bg-white/[0.03] hover:border-(--accent-primary)"
+                          ? "border-primary bg-primary/20"
+                          : "border-border bg-card hover:border-foreground"
                       }`}
                     >
                       <span className="flex items-center gap-2 font-medium text-foreground">
                         <Volume2 className="size-4" aria-hidden="true" />
                         {item.label}
                       </span>
-                      <span className="mt-1 block text-sm text-(--text-muted)">
+                      <span className="mt-1 block text-sm text-muted-foreground">
                         {item.description}
                       </span>
                     </button>
@@ -200,7 +200,7 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
           </div>
 
           {error && (
-            <p className="mt-4 text-sm text-(--accent-danger)" role="alert">
+            <p className="mt-4 text-sm text-destructive" role="alert">
               {error}
             </p>
           )}
@@ -209,14 +209,14 @@ export function AlarmModal({ alarm, onSave, onClose }: AlarmModalProps) {
             <button
               type="button"
               onClick={handleClose}
-              className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-5 py-3 font-medium text-foreground transition hover:border-(--accent-danger)"
+              className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg border border-border px-5 py-3 font-medium text-foreground transition hover:border-destructive"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg bg-(--accent-primary) px-5 py-3 font-medium text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
+              className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg bg-primary px-5 py-3 font-medium text-primary-foreground shadow-sm transition hover:opacity-90"
             >
               Save Alarm
             </button>

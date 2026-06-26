@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { NotificationBadge } from "@/components/ui/NotificationBadge";
 import { TABS } from "@/lib/tabs";
 import type { TabId } from "@/types";
@@ -16,12 +15,10 @@ export function TabBar({
   onTabChange,
   hasEnabledAlarm = false,
 }: TabBarProps) {
-  const reduceMotion = useReducedMotion();
-
   return (
     <nav
       aria-label="Timeglass modules"
-      className="no-scrollbar glass-panel mx-auto flex w-full max-w-5xl gap-2 overflow-x-auto p-2"
+      className="no-scrollbar flex w-full gap-1 overflow-x-auto rounded-lg border border-border bg-card p-1 shadow-sm"
     >
       {TABS.map((tab) => {
         const Icon = tab.icon;
@@ -34,25 +31,14 @@ export function TabBar({
             type="button"
             onClick={() => onTabChange(tab.id)}
             aria-current={isActive ? "page" : undefined}
-            className={`focus-ring relative flex min-h-11 min-w-24 items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition ${
+            className={`focus-ring relative flex min-h-11 min-w-24 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition ${
               isActive
-                ? "bg-white/10 text-foreground"
-                : "text-(--text-muted) hover:bg-white/8 hover:text-foreground"
+                ? "bg-primary text-primary-foreground"
+                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
             }`}
           >
             <Icon className="size-4" aria-hidden="true" />
             <span>{tab.label}</span>
-
-            {isActive && (
-              <motion.span
-                layoutId="active-tab-indicator"
-                className="absolute inset-x-3 bottom-1 h-0.5 rounded-full bg-(--accent-primary) shadow-[0_0_12px_rgba(124,107,255,0.9)]"
-                transition={{
-                  duration: reduceMotion ? 0 : 0.25,
-                  ease: "easeOut",
-                }}
-              />
-            )}
 
             <NotificationBadge show={showBadge} />
           </button>

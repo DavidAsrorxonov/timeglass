@@ -20,14 +20,14 @@ export default function Error({
           Something went wrong
         </h1>
 
-        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-(--text-muted)">
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-muted-foreground">
           Timeglass had a problem loading this page.
         </p>
 
         <button
           type="button"
           onClick={() => unstable_retry()}
-          className="focus-ring mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-(--accent-primary) px-5 py-3 font-medium text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
+          className="focus-ring mt-6 inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-5 py-3 font-medium text-primary-foreground shadow-sm transition hover:opacity-90"
         >
           Try Again
         </button>

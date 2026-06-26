@@ -88,10 +88,10 @@ export function MiniCalendar({
   );
 
   return (
-    <section className="rounded-lg border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+    <section className="rounded-lg border border-border bg-card p-4 sm:p-5">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-(--text-muted)">
+          <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground">
             Month View
           </p>
           <h2 className="mt-2 text-2xl font-semibold text-foreground">
@@ -109,7 +109,7 @@ export function MiniCalendar({
           <button
             type="button"
             onClick={onToday}
-            className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary) hover:bg-white/8"
+            className="focus-ring inline-flex min-h-11 items-center justify-center rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-foreground hover:bg-accent"
           >
             Today
           </button>
@@ -126,7 +126,7 @@ export function MiniCalendar({
         {WEEKDAYS.map((weekday) => (
           <div
             key={weekday}
-            className="pb-1 text-center font-mono text-[0.65rem] uppercase tracking-[0.12em] text-(--text-muted) sm:text-xs"
+            className="pb-1 text-center font-mono text-[0.65rem] uppercase tracking-[0.12em] text-muted-foreground sm:text-xs"
           >
             {weekday}
           </div>
@@ -134,10 +134,10 @@ export function MiniCalendar({
 
         {days.map((day) => {
           const activeClass = day.isSelected
-            ? "border-(--accent-primary) bg-(--accent-primary)/25 text-white shadow-[0_0_18px_rgba(124,107,255,0.24)]"
+            ? "border-primary bg-primary text-primary-foreground shadow-sm"
             : day.isToday
-              ? "border-(--accent-glow) bg-white/[0.05] text-white"
-              : "border-white/10 text-foreground hover:border-(--accent-primary)";
+              ? "border-foreground bg-muted text-foreground"
+              : "border-border text-foreground hover:border-foreground";
           const mutedClass = day.isCurrentMonth
             ? "opacity-100"
             : "opacity-40 hover:opacity-70";
@@ -166,7 +166,7 @@ export function MiniCalendar({
               <span>{day.dayNumber}</span>
               {day.hasEvents && (
                 <span
-                  className="mt-1 size-1.5 rounded-full bg-(--accent-success) shadow-[0_0_8px_rgba(52,211,153,0.8)]"
+                  className="mt-1 size-1.5 rounded-full bg-chart-1 shadow-sm"
                   aria-hidden="true"
                 />
               )}

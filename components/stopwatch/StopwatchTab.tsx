@@ -85,7 +85,7 @@ export function StopwatchTab() {
   return (
     <GlassPanel className="p-5 sm:p-6 lg:p-8" glow>
       <div className="text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.32em] text-(--accent-glow)">
+        <p className="font-mono text-xs uppercase tracking-[0.32em] text-muted-foreground">
           Stopwatch
         </p>
         <h2 className="mt-3 text-2xl font-semibold text-foreground sm:text-3xl">
@@ -101,7 +101,7 @@ export function StopwatchTab() {
           {displayTime}
         </p>
 
-        <p className="mt-4 font-mono text-xs uppercase tracking-[0.24em] text-(--text-muted)">
+        <p className="mt-4 font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground">
           {stopwatch.status}
         </p>
       </div>
@@ -111,7 +111,7 @@ export function StopwatchTab() {
           type="button"
           onClick={stopwatch.lap}
           disabled={!isRunning}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-primary) disabled:cursor-not-allowed disabled:opacity-40"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:border-foreground disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Flag className="size-4" aria-hidden="true" />
           Lap
@@ -120,7 +120,7 @@ export function StopwatchTab() {
         <button
           type="button"
           onClick={handlePrimaryAction}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-6 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
         >
           {isRunning ? (
             <Pause className="size-4" aria-hidden="true" />
@@ -134,7 +134,7 @@ export function StopwatchTab() {
           type="button"
           onClick={stopwatch.reset}
           disabled={!canReset}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-6 py-3 text-sm font-semibold text-foreground transition hover:border-(--accent-danger) disabled:cursor-not-allowed disabled:opacity-40"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:border-destructive disabled:cursor-not-allowed disabled:opacity-40"
         >
           <RotateCcw className="size-4" aria-hidden="true" />
           Reset
@@ -142,7 +142,7 @@ export function StopwatchTab() {
       </div>
 
       {copyStatus === "copied" ? (
-        <p className="mt-4 text-center text-sm text-(--accent-success)">
+        <p className="mt-4 text-center text-sm text-chart-1">
           Laps copied to clipboard.
         </p>
       ) : null}

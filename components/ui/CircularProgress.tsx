@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useId } from "react";
 
 type CircularProgressProps = {
   value: number;
@@ -22,15 +21,14 @@ export function CircularProgress({
 }: CircularProgressProps) {
   const reduceMotion = useReducedMotion();
   const safeValue = Math.min(1, Math.max(0, value));
-  const filterId = useId().replaceAll(":", "");
   const radius = (size - strokeWidth * 3) / 2;
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference * (1 - safeValue);
   const color = success
-    ? "var(--accent-success)"
+    ? "var(--chart-1)"
     : danger
-      ? "var(--accent-danger)"
-      : "var(--accent-primary)";
+      ? "var(--destructive)"
+      : "var(--primary)";
 
   return (
     <svg
@@ -41,48 +39,13 @@ export function CircularProgress({
       role="img"
       aria-label={`${Math.round(safeValue * 100)}% remaining`}
     >
-      <defs>
-        <filter
-          id={filterId}
-          x="-50%"
-          y="-50%"
-          width="200%"
-          height="200%"
-          colorInterpolationFilters="sRGB"
-        >
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation={strokeWidth * 0.85}
-          />
-        </filter>
-      </defs>
-
       <circle
         cx={size / 2}
         cy={size / 2}
         r={radius}
         fill="none"
-        stroke="rgba(255,255,255,0.12)"
+        stroke="var(--border)"
         strokeWidth={strokeWidth}
-      />
-
-      <motion.circle
-        cx={size / 2}
-        cy={size / 2}
-        r={radius}
-        fill="none"
-        stroke={color}
-        strokeDasharray={circumference}
-        animate={{ strokeDashoffset: dashOffset }}
-        transition={{ duration: reduceMotion ? 0 : 0.25, ease: "linear" }}
-        strokeLinecap="round"
-        strokeWidth={strokeWidth}
-        strokeOpacity={0.42}
-        filter={`url(#${filterId})`}
-        style={{
-          rotate: -90,
-          transformOrigin: "50% 50%",
-        }}
       />
 
       <motion.circle

@@ -16,12 +16,12 @@ type EventListProps = {
 };
 
 const EVENT_COLORS = [
-  "#7c6bff",
-  "#34d399",
-  "#f87171",
-  "#60a5fa",
-  "#fbbf24",
-  "#f472b6",
+  "var(--foreground)",
+  "var(--muted-foreground)",
+  "var(--border)",
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--destructive)",
 ];
 
 function getSelectedDayLabel(date: Date) {
@@ -120,16 +120,16 @@ export function EventList({
   };
 
   return (
-    <section className="rounded-lg border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+    <section className="rounded-lg border border-border bg-card p-4 sm:p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="font-mono text-xs uppercase tracking-[0.24em] text-(--text-muted)">
+          <p className="font-mono text-xs uppercase tracking-[0.24em] text-muted-foreground">
             Selected Day
           </p>
           <h2 className="mt-2 text-2xl font-semibold text-foreground">
             Events
           </h2>
-          <p className="mt-1 text-sm text-(--text-muted)">
+          <p className="mt-1 text-sm text-muted-foreground">
             {getSelectedDayLabel(selectedDate)}
           </p>
         </div>
@@ -137,7 +137,7 @@ export function EventList({
         <button
           type="button"
           onClick={openAddForm}
-          className="focus-ring inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-4 py-2 text-sm font-semibold text-white shadow-[0_0_20px_rgba(124,107,255,0.3)] transition hover:bg-(--accent-glow)"
+          className="focus-ring inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-sm transition hover:opacity-90"
         >
           <Plus className="size-4" aria-hidden="true" />
           Add
@@ -166,12 +166,12 @@ export function EventList({
                   duration: reduceMotion ? 0 : 0.2,
                   ease: "easeOut",
                 }}
-                className="rounded-lg border border-white/10 bg-white/[0.04] p-4"
+                className="rounded-lg border border-border bg-muted p-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 gap-3">
                     <span
-                      className="mt-1 size-3 shrink-0 rounded-full shadow-[0_0_12px_rgba(255,255,255,0.18)]"
+                      className="mt-1 size-3 shrink-0 rounded-full shadow-sm"
                       style={{ backgroundColor: event.color }}
                       aria-hidden="true"
                     />
@@ -180,7 +180,7 @@ export function EventList({
                       <h3 className="truncate font-medium text-foreground">
                         {event.title}
                       </h3>
-                      <p className="mt-1 font-mono text-sm text-(--text-muted)">
+                      <p className="mt-1 font-mono text-sm text-muted-foreground">
                         {event.time ?? "Any time"}
                       </p>
                     </div>
@@ -190,7 +190,7 @@ export function EventList({
                     <button
                       type="button"
                       onClick={() => startEditing(event)}
-                      className="focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-primary) hover:text-foreground"
+                      className="focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-border text-muted-foreground transition hover:border-foreground hover:text-foreground"
                       aria-label={`Edit ${event.title}`}
                     >
                       <Pencil className="size-4" aria-hidden="true" />
@@ -199,7 +199,7 @@ export function EventList({
                     <button
                       type="button"
                       onClick={() => onDeleteEvent(event.id)}
-                      className="focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-danger) hover:text-(--accent-danger)"
+                      className="focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-border text-muted-foreground transition hover:border-destructive hover:text-destructive"
                       aria-label={`Delete ${event.title}`}
                     >
                       <Trash2 className="size-4" aria-hidden="true" />
@@ -215,7 +215,7 @@ export function EventList({
       <AnimatePresence>
         {isFormOpen && (
           <motion.div
-            className="mt-6 rounded-lg border border-white/10 bg-white/[0.04] p-4"
+            className="mt-6 rounded-lg border border-border bg-muted p-4"
             initial={reduceMotion ? false : { opacity: 0, y: 8 }}
             animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
             exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
@@ -228,7 +228,7 @@ export function EventList({
               <button
                 type="button"
                 onClick={resetForm}
-                className="focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-white/10 text-(--text-muted) transition hover:border-(--accent-danger) hover:text-foreground"
+                className="focus-ring inline-flex size-11 items-center justify-center rounded-lg border border-border text-muted-foreground transition hover:border-destructive hover:text-foreground"
                 aria-label="Close event form"
               >
                 <X className="size-4" aria-hidden="true" />
@@ -237,7 +237,7 @@ export function EventList({
 
             <div className="mt-4 grid gap-4">
               <label className="block">
-                <span className="mb-2 block text-sm text-(--text-muted)">
+                <span className="mb-2 block text-sm text-muted-foreground">
                   Title
                 </span>
                 <input
@@ -246,24 +246,24 @@ export function EventList({
                   onChange={(event) => setTitle(event.target.value)}
                   placeholder="Study session"
                   maxLength={80}
-                  className="focus-ring glass-panel w-full px-4 py-3 text-foreground placeholder:text-(--text-muted) focus:border-(--accent-primary)"
+                  className="focus-ring w-full rounded-md border border-input bg-background px-4 py-3 text-foreground shadow-sm outline-none transition placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
                 />
               </label>
 
               <label className="block">
-                <span className="mb-2 block text-sm text-(--text-muted)">
+                <span className="mb-2 block text-sm text-muted-foreground">
                   Time
                 </span>
                 <input
                   type="time"
                   value={time}
                   onChange={(event) => setTime(event.target.value)}
-                  className="focus-ring glass-panel w-full px-4 py-3 font-mono text-foreground focus:border-(--accent-primary)"
+                  className="focus-ring w-full rounded-md border border-input bg-background px-4 py-3 font-mono text-foreground shadow-sm outline-none transition focus-visible:ring-2 focus-visible:ring-ring"
                 />
               </label>
 
               <div>
-                <p className="mb-2 text-sm text-(--text-muted)">Color</p>
+                <p className="mb-2 text-sm text-muted-foreground">Color</p>
                 <div className="flex flex-wrap gap-2">
                   {EVENT_COLORS.map((item) => {
                     const active = color === item;
@@ -277,8 +277,8 @@ export function EventList({
                         aria-pressed={active}
                         className={`focus-ring size-11 rounded-lg border-2 transition ${
                           active
-                            ? "border-white shadow-[0_0_14px_rgba(255,255,255,0.25)]"
-                            : "border-transparent hover:border-white/50"
+                            ? "border-foreground shadow-sm"
+                            : "border-transparent hover:border-border"
                         }`}
                         style={{ backgroundColor: item }}
                       />
@@ -291,7 +291,7 @@ export function EventList({
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-danger)"
+                  className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-destructive"
                 >
                   <X className="size-4" aria-hidden="true" />
                   Cancel
@@ -301,7 +301,7 @@ export function EventList({
                   type="button"
                   onClick={saveEvent}
                   disabled={!title.trim()}
-                  className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-(--accent-primary) px-4 py-2 text-sm font-semibold text-white transition hover:bg-(--accent-glow) disabled:cursor-not-allowed disabled:opacity-40"
+                  className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <Save className="size-4" aria-hidden="true" />
                   Save

@@ -56,14 +56,14 @@ export class TabErrorBoundary extends Component<
             Something went wrong in this tab.
           </p>
 
-          <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-(--text-muted)">
+          <p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
             Try resetting this tab or refreshing the page.
           </p>
 
           <button
             type="button"
             onClick={this.reset}
-            className="focus-ring mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-(--accent-primary) px-5 py-3 font-medium text-white shadow-[0_0_24px_rgba(124,107,255,0.35)] transition hover:bg-(--accent-glow)"
+            className="focus-ring mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-5 py-3 font-medium text-primary-foreground shadow-sm transition hover:opacity-90"
           >
             Try Again
           </button>

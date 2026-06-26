@@ -38,10 +38,10 @@ export function LapList({
 
   return (
     <div className="glass-panel mt-6 overflow-hidden">
-      <div className="flex flex-col gap-4 border-b border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+      <div className="flex flex-col gap-4 border-b border-border px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
         <div>
           <h3 className="text-lg font-semibold text-foreground">Laps</h3>
-          <p className="text-sm text-(--text-muted)">
+          <p className="text-sm text-muted-foreground">
             Best and worst split times are labeled.
           </p>
         </div>
@@ -49,7 +49,7 @@ export function LapList({
         <button
           type="button"
           onClick={onCopy}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-semibold text-foreground transition hover:border-(--accent-primary)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-semibold text-foreground transition hover:border-foreground"
         >
           <Clipboard className="size-4" aria-hidden="true" />
           Copy
@@ -57,7 +57,7 @@ export function LapList({
       </div>
 
       <div className="max-h-80 overflow-y-auto">
-        <div className="grid grid-cols-[0.55fr_1fr_1fr] border-b border-white/10 px-4 py-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-(--text-muted) sm:grid-cols-[0.45fr_1fr_1fr_0.8fr] sm:px-5">
+        <div className="grid grid-cols-[0.55fr_1fr_1fr] border-b border-border px-4 py-3 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground sm:grid-cols-[0.45fr_1fr_1fr_0.8fr] sm:px-5">
           <span>#</span>
           <span>Lap Time</span>
           <span>Total Time</span>
@@ -70,9 +70,9 @@ export function LapList({
             const isWorst = index === worstLapIndex && laps.length > 1;
             const marker = isBest ? "Best" : isWorst ? "Worst" : "";
             const textClass = isBest
-              ? "text-(--accent-success)"
+              ? "text-chart-1"
               : isWorst
-                ? "text-(--accent-danger)"
+                ? "text-destructive"
                 : "text-foreground";
 
             return (
@@ -85,7 +85,7 @@ export function LapList({
                   duration: reduceMotion ? 0 : 0.2,
                   ease: "easeOut",
                 }}
-                className={`grid grid-cols-[0.55fr_1fr_1fr] border-b border-white/5 px-4 py-3 font-mono text-sm last:border-b-0 sm:grid-cols-[0.45fr_1fr_1fr_0.8fr] sm:px-5 ${textClass}`}
+                className={`grid grid-cols-[0.55fr_1fr_1fr] border-b border-border px-4 py-3 font-mono text-sm last:border-b-0 sm:grid-cols-[0.45fr_1fr_1fr_0.8fr] sm:px-5 ${textClass}`}
               >
                 <span>{lap.index}</span>
                 <span>{formatLapTime(lap.lapTime)}</span>

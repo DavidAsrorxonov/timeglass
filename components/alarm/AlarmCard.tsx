@@ -50,7 +50,7 @@ export function AlarmCard({
 
           <div className="mt-3 flex flex-wrap gap-1.5">
             {alarm.days.length === 0 ? (
-              <span className="rounded-md border border-white/10 px-2.5 py-1 text-xs text-(--text-muted)">
+              <span className="rounded-md border border-border px-2.5 py-1 text-xs text-muted-foreground">
                 Every day
               </span>
             ) : (
@@ -59,8 +59,8 @@ export function AlarmCard({
                   key={day}
                   className={`rounded-md border px-2.5 py-1 text-xs ${
                     alarm.days.includes(day)
-                      ? "border-(--accent-primary)/50 text-foreground"
-                      : "border-white/10 text-(--text-muted)"
+                      ? "border-primary/50 text-foreground"
+                      : "border-border text-muted-foreground"
                   }`}
                 >
                   {day}
@@ -69,7 +69,7 @@ export function AlarmCard({
             )}
           </div>
 
-          <p className="mt-3 inline-flex rounded-md border border-white/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-(--text-muted)">
+          <p className="mt-3 inline-flex rounded-md border border-border px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground">
             {getSoundLabel(alarm.sound)}
           </p>
         </div>
@@ -81,12 +81,12 @@ export function AlarmCard({
           aria-pressed={alarm.enabled}
           className={`focus-ring relative h-8 w-14 shrink-0 rounded-full border transition ${
             alarm.enabled
-              ? "border-(--accent-primary) bg-(--accent-primary)/30"
-              : "border-white/10 bg-white/5"
+              ? "border-primary bg-primary/30"
+              : "border-border bg-muted"
           }`}
         >
           <motion.span
-            className="absolute top-1 size-6 rounded-full bg-white shadow"
+            className="absolute top-1 size-6 rounded-full bg-background shadow-sm"
             animate={{ x: alarm.enabled ? 24 : 4 }}
             transition={{ duration: reduceMotion ? 0 : 0.2, ease: "easeOut" }}
           />
@@ -97,7 +97,7 @@ export function AlarmCard({
         <button
           type="button"
           onClick={() => onEdit(alarm)}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-primary)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-foreground"
         >
           <Pencil className="size-4" aria-hidden="true" />
           Edit
@@ -106,7 +106,7 @@ export function AlarmCard({
         <button
           type="button"
           onClick={() => onDelete(alarm.id)}
-          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-foreground transition hover:border-(--accent-danger) hover:text-(--accent-danger)"
+          className="focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground transition hover:border-destructive hover:text-destructive"
         >
           <Trash2 className="size-4" aria-hidden="true" />
           Delete
