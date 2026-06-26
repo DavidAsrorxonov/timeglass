@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
       "A modern clock, timer, stopwatch, Pomodoro, alarm, and local calendar app.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a14",
-    theme_color: "#0a0a14",
+    background_color: "#fcfcfc",
+    theme_color: "#fcfcfc",
     icons: [
       {
         src: "/icons/icon-192.png",

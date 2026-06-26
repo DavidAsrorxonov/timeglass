@@ -139,6 +139,11 @@ The goal is to keep a clear record of:
 - Changed `useClock` to use a deterministic initial timestamp for SSR/client hydration before updating to live time on the first animation frame.
 - Replaced the Framer Motion SVG progress circle with a normal SVG circle using a defined `strokeDashoffset`, removing the browser warning about animating `strokeDashoffset` from `undefined`.
 
+#### Phase 13 Icon Update
+
+- Updated `public/favicon.svg`, `public/icons/icon-192.png`, `public/icons/icon-512.png`, and `app/favicon.ico` to keep the same Timeglass hourglass mark while replacing the purple palette with a neutral Vercel-style black-on-light treatment.
+- Updated PWA manifest `background_color` and `theme_color` to the neutral light theme color.
+
 #### Phase 13 Verified
 
 - Phase 13 verification passed with `npx tsc --noEmit`.
