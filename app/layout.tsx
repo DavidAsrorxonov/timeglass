@@ -64,9 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geist.variable} ${geistMono.variable}`}
-      >
+      <body className={`${geist.variable} ${geistMono.variable}`}>
         {children}
         <ServiceWorkerRegister />
       </body>

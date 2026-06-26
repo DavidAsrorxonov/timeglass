@@ -11,8 +11,9 @@ export interface ClockState {
   dayOfWeek: string;
 }
 
-function getTimeParts(timezone?: string): ClockState {
-  const now = new Date();
+const INITIAL_CLOCK_DATE = new Date(0);
+
+function getTimeParts(timezone?: string, now = new Date()): ClockState {
 
   if (!timezone) {
     return {
@@ -62,7 +63,9 @@ function getTimeParts(timezone?: string): ClockState {
 }
 
 export function useClock(timezone?: string) {
-  const [clock, setClock] = useState<ClockState>(() => getTimeParts(timezone));
+  const [clock, setClock] = useState<ClockState>(() =>
+    getTimeParts(timezone, INITIAL_CLOCK_DATE),
+  );
 
   useEffect(() => {
     let frameId: number;

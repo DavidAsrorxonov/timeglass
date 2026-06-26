@@ -1,7 +1,3 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 type CircularProgressProps = {
   value: number;
   size?: number;
@@ -19,7 +15,6 @@ export function CircularProgress({
   danger = false,
   success = false,
 }: CircularProgressProps) {
-  const reduceMotion = useReducedMotion();
   const safeValue = Math.min(1, Math.max(0, value));
   const radius = (size - strokeWidth * 3) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -48,20 +43,20 @@ export function CircularProgress({
         strokeWidth={strokeWidth}
       />
 
-      <motion.circle
+      <circle
         cx={size / 2}
         cy={size / 2}
         r={radius}
         fill="none"
         stroke={color}
         strokeDasharray={circumference}
-        animate={{ strokeDashoffset: dashOffset }}
-        transition={{ duration: reduceMotion ? 0 : 0.25, ease: "linear" }}
+        strokeDashoffset={dashOffset}
         strokeLinecap="round"
         strokeWidth={strokeWidth}
         style={{
-          rotate: -90,
+          rotate: "-90deg",
           transformOrigin: "50% 50%",
+          transition: "stroke-dashoffset 0.25s linear",
         }}
       />
     </svg>

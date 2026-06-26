@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 type GlassPanelProps = {
@@ -19,12 +16,12 @@ export function GlassPanel({
   void glow;
 
   return (
-    <motion.div
-      className={`rounded-lg border border-border bg-card text-card-foreground shadow-sm ${className}`}
-      whileHover={hover ? { y: -1 } : undefined}
-      transition={{ duration: 0.18, ease: "easeOut" }}
+    <div
+      className={`rounded-lg border border-border bg-card text-card-foreground shadow-sm transition ${
+        hover ? "hover:-translate-y-px" : ""
+      } ${className}`}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

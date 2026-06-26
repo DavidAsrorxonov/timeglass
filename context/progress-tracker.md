@@ -124,13 +124,20 @@ The goal is to keep a clear record of:
 
 - Replaced the purple/glass global theme with the tweakcn OKLCH neutral palette, dark-mode variables, Tailwind v4 `@theme inline` mappings, compatibility variables, and subtle shadow/radius tokens.
 - Switched the app font setup from Bebas Neue, Inter, and JetBrains Mono to Geist and Geist Mono via `next/font/google`.
-- Simplified `GlassPanel` into a minimal card surface while preserving its existing API for imports and compatibility.
+- Simplified `GlassPanel` into a minimal plain React card surface while preserving its existing API for imports and compatibility.
 - Replaced the animated purple `GlowBackground` with a static background layer.
 - Updated `AppShell` header copy and spacing to a cleaner product-style layout.
 - Reworked `TabBar` into a segmented control with primary active state and no glowing underline.
 - Removed neon progress-ring filters and changed ring colors to `primary`, `destructive`, and `chart-1`.
 - Cleaned the analog clock to use `card`, `border`, `foreground`, `muted-foreground`, and `primary` variables without glow filters.
 - Migrated feature tabs, cards, modals, inputs, buttons, empty states, notification banner, error fallbacks, and calendar controls to neutral Tailwind tokens such as `bg-card`, `border-border`, `text-muted-foreground`, `bg-primary`, and `bg-destructive`.
+
+#### Phase 13 Fixed
+
+- Removed the Framer Motion wrapper from `GlassPanel` to avoid persistent hydration mismatches from shared `motion.div` markup while keeping the same component props and visual style.
+- Made notification support detection hydration-safe with `useSyncExternalStore`, so browser-only notification support does not make `NotificationBanner` render different server and first-client markup.
+- Changed `useClock` to use a deterministic initial timestamp for SSR/client hydration before updating to live time on the first animation frame.
+- Replaced the Framer Motion SVG progress circle with a normal SVG circle using a defined `strokeDashoffset`, removing the browser warning about animating `strokeDashoffset` from `undefined`.
 
 #### Phase 13 Verified
 

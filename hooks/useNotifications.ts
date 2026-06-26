@@ -1,11 +1,40 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { supportsNotifications } from "@/lib/browser-support";
 
-export function useNotifications() {
-  const isSupported = supportsNotifications();
+function subscribeToNotificationSupport(onStoreChange: () => void) {
+  if (typeof window === "undefined") {
+    return () => {};
+  }
 
+  const timeoutId = window.setTimeout(onStoreChange, 0);
+
+  return () => {
+    window.clearTimeout(timeoutId);
+  };
+}
+
+function getNotificationSupportSnapshot() {
+  return supportsNotifications();
+}
+
+function getNotificationSupportServerSnapshot() {
+  return false;
+}
+
+export function useNotifications() {
+  const isSupported = useSyncExternalStore(
+    subscribeToNotificationSupport,
+    getNotificationSupportSnapshot,
+    getNotificationSupportServerSnapshot,
+  );
   const [permission, setPermission] =
     useState<NotificationPermission>("default");
 
