@@ -3,7 +3,7 @@
 ## Project Status
 
 **Project Name:** Timeglass  
-**Current Stage:** Phase 13 Theme Change Complete
+**Current Stage:** Phase 14 README Update Complete
 **Last Updated:** 2026-06-26  
 **Main Stack:** Next.js 16, TypeScript, Tailwind CSS v4, Framer Motion, LocalStorage, Web Audio API, Browser Notifications API
 
@@ -57,6 +57,7 @@ The goal is to keep a clear record of:
 | 2026-06-26 | Phase 11 polish and final details implemented | Timeglass now has polished tab transitions, reusable empty states, final metadata and favicon/app icon references, tab and App Router error fallbacks, broken LocalStorage cleanup, and final verification pass results. | Completed |
 | 2026-06-26 | Phase 12 automated testing implemented | Jest and Testing Library were added with Next.js 16 `next/jest`, browser API mocks, hook tests, component tests, integration flow tests, and a manual browser testing checklist. | Completed |
 | 2026-06-26 | Phase 13 Vercel-style theme implemented | Timeglass was migrated from purple glassmorphism to a minimal neutral OKLCH theme with Geist fonts, simple cards, segmented navigation, neutral inputs, simplified progress rings, and reduced glow/background effects. | Completed |
+| 2026-06-26 | Phase 14 README update implemented | The root README was replaced with project-specific Timeglass documentation and a matching black-and-white README icon was added at `public/icons/timeglass-icon.svg`. | Completed |
 
 ---
 
@@ -77,12 +78,13 @@ The goal is to keep a clear record of:
 | -------- | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
 | High     | Start Phase 12 testing             | Add unit tests, hook tests, LocalStorage tests, timer tests, alarm tests, calendar tests, and a manual testing checklist. | Completed |
 | High     | Complete Phase 13 theme change     | Replace the purple/glass visual direction with a minimal Vercel-inspired neutral theme without changing app logic. | Completed |
+| High     | Complete Phase 14 README update    | Update the root README with overview, features, stack, design system, browser APIs, limitations, project structure, scripts, LocalStorage keys, phases, and a top icon. | Completed |
 | High     | Verify dev server locally          | Run `npm run dev` and open `http://localhost:3000` on the local machine. The managed sandbox blocked binding to port 3000 and escalated startup was not approved here. | Blocked Here |
 | High     | Complete manual browser checklist  | Run the real-browser checks in `context/testing-checklist.md`, including notifications, audio alerts, PWA service worker behavior, responsive layouts, and Lighthouse accessibility. | Not Started |
-| High     | Create `design-system.md`          | Document colors, fonts, glassmorphism tokens, spacing, animations, and reusable UI rules.                 | Not Started |
+| High     | Create `design-system.md`          | Document colors, fonts, neutral OKLCH tokens, spacing, animations, and reusable UI rules.                 | Not Started |
 | High     | Create `technical-architecture.md` | Document folder structure, main technologies, shared hooks, LocalStorage usage, audio, and notifications. | Not Started |
 | High     | Create `features.md`               | Document all six main modules: World Clock, Countdown, Stopwatch, Pomodoro, Alarm, and Calendar.          | Not Started |
-| Medium   | Create `build-roadmap.md`          | Convert the 12 phases into a practical coding order with milestones.                                      | Not Started |
+| Medium   | Create `build-roadmap.md`          | Convert the 14 phases into a practical coding order with milestones.                                      | Not Started |
 | Medium   | Create `testing-checklist.md`      | Prepare a testing checklist for hooks, UI behavior, LocalStorage, notifications, and responsiveness.      | Completed |
 
 ---
@@ -93,6 +95,7 @@ The goal is to keep a clear record of:
 | ---------------------- | ------- | ----------- | --------- | ---------------------------------------------------- |
 | Project Overview       | Yes     | No          | Yes       | `project-overview.md` created                        |
 | Progress Tracking      | Yes     | No          | Yes       | `progress-tracker.md` created                        |
+| README Documentation   | Yes     | No          | Yes       | Root `README.md` updated with Timeglass overview, features, stack, browser limitations, project structure, scripts, LocalStorage keys, phases, and README icon |
 | Design System          | Yes     | Yes         | No        | Neutral OKLCH theme variables, Geist font setup, minimal card/input/button patterns, and compatibility variables added; separate documentation still needed |
 | Theme Change           | Yes     | No          | Yes       | Phase 13 Vercel-inspired neutral theme migration implemented across shared UI and feature components |
 | Technical Architecture | Yes     | No          | No        | Needs separate documentation                         |
@@ -119,6 +122,23 @@ The goal is to keep a clear record of:
 ## Change Log
 
 ### 2026-06-26
+
+#### Phase 14 Added
+
+- Added `public/icons/timeglass-icon.svg` with the requested minimalist black-and-white Timeglass hourglass mark.
+- Added a centered README header that displays the Timeglass icon before the project title.
+
+#### Phase 14 Changed
+
+- Replaced the generated Create Next App README with project-specific Timeglass documentation.
+- Documented the app overview, all six main features, tech stack, Vercel-inspired neutral design system, browser APIs, browser limitations, project structure, setup commands, scripts, LocalStorage keys, development phases, future improvements, and license note.
+- Clarified that timers, Pomodoro sessions, and alarms are browser-based and work while Timeglass is open or active, and that Timeglass does not provide native OS-level alarms.
+
+#### Phase 14 Verified
+
+- Phase 14 verification passed with `npm run lint`.
+- Phase 14 verification passed with `npx tsc --noEmit`.
+- Phase 14 production build first failed in the managed sandbox because `next/font/google` could not fetch Geist fonts, then passed with network-enabled execution of `npm run build`.
 
 #### Phase 13 Changed
 
@@ -399,18 +419,16 @@ These questions should be answered before or during development:
 
 ## Current Project Phase
 
-The project has completed **Phase 12 automated testing implementation**.
+The project has completed **Phase 14 README update**.
 
-The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, polished animated tab transitions, responsive navigation, a reusable glass panel wrapper, an animated ambient background, LocalStorage persistence for the active tab, complete World Clock, Countdown Timer, Stopwatch, Pomodoro, Alarm, and Local Calendar tabs, app-wide cross-cutting features, final polish/error handling details, and an automated Jest test harness.
+The Next.js app now has a functional single-page layout with six tabs, shared tab metadata, polished animated tab transitions, responsive navigation, neutral Vercel-inspired styling, LocalStorage persistence for the active tab, complete World Clock, Countdown Timer, Stopwatch, Pomodoro, Alarm, and Local Calendar tabs, app-wide cross-cutting features, final polish/error handling details, an automated Jest test harness, and a project-specific root README with a matching Timeglass icon.
 
-Phase 12 added:
+Phase 14 added:
 
-1. Next.js 16 Jest configuration with browser API mocks
-2. Hook tests for storage, timers, stopwatch, Pomodoro, alarms, and calendar behavior
-3. Component tests for core visual states
-4. Integration tests for Countdown, Alarm, and Calendar flows
-5. Manual browser verification checklist
-6. Final typecheck, lint, test, and production build verification
+1. A root README tailored to the completed Timeglass app
+2. A top README icon at `public/icons/timeglass-icon.svg`
+3. Documentation for features, stack, design system, browser APIs, browser limitations, project structure, scripts, LocalStorage keys, development phases, and future improvements
+4. Final lint, typecheck, and production build verification for the README/static-asset update
 
 The remaining recommended verification step is to run the manual browser checklist in `context/testing-checklist.md` locally.
 
@@ -453,6 +471,6 @@ Use this format for new change log entries:
 
 ## Short Status
 
-**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, Phase 3 layout/navigation, Phase 4 world clock, Phase 5 countdown timer, Phase 6 stopwatch, Phase 7 Pomodoro, Phase 8 alarm system, Phase 9 local calendar, Phase 10 cross-cutting features, Phase 11 polish/final details, and Phase 12 automated testing implementation
+**Done:** Phase 1 project scaffold, Phase 2 core infrastructure, Phase 3 layout/navigation, Phase 4 world clock, Phase 5 countdown timer, Phase 6 stopwatch, Phase 7 Pomodoro, Phase 8 alarm system, Phase 9 local calendar, Phase 10 cross-cutting features, Phase 11 polish/final details, Phase 12 automated testing implementation, Phase 13 Vercel-style theme, and Phase 14 README update
 **In Progress:** Planning documentation and manual browser verification  
 **Next:** Run `npm run dev` locally, then complete `context/testing-checklist.md`
